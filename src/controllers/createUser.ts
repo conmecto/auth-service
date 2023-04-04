@@ -1,5 +1,5 @@
-import { interfaces, validationSchema, constants, enums } from '../utils';
-import { addUser, searchCity, CustomError, getUserByEmail } from '../services';
+import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
+import { addUser, searchCity, CustomError, getUserByEmail, sendEmail } from '../services';
 
 const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.ICreateUserResponse> => {
     await validationSchema.createUserSchema.validateAsync(req.body);
@@ -16,12 +16,12 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IC
     if (!checkCity) {
         throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.CITY_NOT_FOUND);
     }
-    const response = await addUser(userObject);
-    if (!response) {
+    const verificationCode = await addUser(userObject);
+    if (!verificationCode) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER);
     }
 
-    // add service to send verification code email
+    await sendEmail(Environments.email, userObject.email, constants.VERIFICATION_CODE_EMAIL_SUBJECT, constants.VERIFICATION_CODE_EMAIL_TEXT);
     return {
         message: constants.USER_CREATED,
         data: [{

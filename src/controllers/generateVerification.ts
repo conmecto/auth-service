@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { interfaces, validationSchema, enums, constants } from '../utils';
-import { getVerification, CustomError, generateVerificationCode } from '../services';
+import { interfaces, validationSchema, enums, constants, Environments } from '../utils';
+import { getVerification, CustomError, generateVerificationCode, sendEmail } from '../services';
 
 const resendVerificationCode = async (req: interfaces.IRequestObject): Promise<interfaces.IGeneric> => {
     await validationSchema.resendCodeSchema.validateAsync(req.body);
@@ -24,7 +24,8 @@ const resendVerificationCode = async (req: interfaces.IRequestObject): Promise<i
     if (!newCode) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER);    
     }
-    // send code to email
+    
+    await sendEmail(Environments.email, email, constants.VERIFICATION_CODE_EMAIL_SUBJECT, constants.VERIFICATION_CODE_EMAIL_TEXT);
     return {
         message: constants.VERIFICATION_CODE_SENT
     }

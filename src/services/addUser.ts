@@ -2,12 +2,12 @@ import { randomInt } from 'crypto';
 import { dbSource } from '../config';
 import { interfaces, helpers } from '../utils';
 
-const addUser = async (createUserObject: interfaces.ICreateUserObject): Promise<boolean> => {
+const addUser = async (createUserObject: interfaces.ICreateUserObject): Promise<number> => {
     const query1 = 'insert into users(email, name, dob, country, search_for, search_in, gender) values($1, $2, $3, $4, $5, $6, $7)';
     const params1 = [...Object.values(createUserObject)];
 
     const query2 = 'insert into verification(email, code, issued_at) values($1, $2, $3)';
-    const params2 = [createUserObject.email, randomInt(999999, 1000000), helpers.getDateWithTimezone()];
+    const params2 = [createUserObject.email, randomInt(100000, 1000000), helpers.getDateWithTimezone()];
 
     let res = false;
     await dbSource.transaction(async (entityManager) => {
@@ -19,7 +19,7 @@ const addUser = async (createUserObject: interfaces.ICreateUserObject): Promise<
             console.error(err);
         }
     });  
-    return res;
+    return res ? <number>params2[1] : 0;
 }
 
 export { addUser }

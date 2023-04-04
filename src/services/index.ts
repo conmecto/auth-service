@@ -6,5 +6,9 @@ import { addUser } from './addUser';
 import { generateAuthToken } from './auth';
 import { getVerification } from './getVerification';
 import { generateVerificationCode } from './updateVerification';
+import sendEmail from './email';
 
-export { verifyUser, CustomError, searchCity, getUserByEmail, addUser, verifyCode, generateAuthToken, getVerification, generateVerificationCode }
+export { 
+    verifyUser, CustomError, searchCity, getUserByEmail, addUser, verifyCode, generateAuthToken, 
+    getVerification, generateVerificationCode, sendEmail 
+}

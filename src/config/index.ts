@@ -1,3 +1,6 @@
 import dbSource from './dbConfig';
+import { getEmailObj } from './aws';
 
-export { dbSource }
+const emailObj = getEmailObj();
+
+export { dbSource, emailObj }
