@@ -1,20 +1,29 @@
-import { DataSource } from 'typeorm';
-import { User, City, Profile, Verification } from '../models';
-import { Environments } from '../utils';
+import { Pool, PoolClient } from 'pg';
+import { Environments, constants, enums } from '../utils';
+import { CustomError } from '../services';
 
-const dbSource = new DataSource({
-    type: 'postgres',
+const pool = new Pool({
     host: Environments.database.host,
     port: Environments.database.port,
-    username: Environments.database.username,
+    user: Environments.database.username,
     password: Environments.database.password,
     database: Environments.database.database,
-    synchronize: true,
-    logging: true,
-    entities: [User, City, Profile, Verification],
-    extra: {
-        connectionLimit: 5
-    }
+    max: constants.DB_MAX_CLIENTS,
+    idleTimeoutMillis: constants.DB_IDLE_TIMEOUT_MILLIS,
+    connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS,
 });
 
-export default dbSource;
+pool.on('error', (err, client) => {
+    console.error('Unexpected error on idle client', err);
+})
+
+const getDbClient = async (): Promise<PoolClient> => {
+    const client = await pool.connect();
+    if (!client) {
+        // maybe add retry functionality 
+        throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER);
+    }
+    return client;
+}
+
+export default getDbClient;

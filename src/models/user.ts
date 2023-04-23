@@ -1,57 +1,55 @@
-import { Entity, Column } from 'typeorm';
 import BaseModel from './baseModel';
 import { enums } from '../utils';
 
-@Entity('users')
+//@Entity('users')
 export default class User extends BaseModel {
-    @Column({
-        unique: true
-    })
+    // @Column({
+    //     unique: true
+    // })
     email: string
 
-    @Column()
+//    @Column()
     name: string
 
-    @Column()
+//    @Column()
     dob: Date
 
-    @Column({
-        type: 'enum',
-        enum: enums.Gender,
-        default: enums.Gender.MAN
-    })
+    // @Column({
+    //     type: 'enum',
+    //     enum: enums.Gender
+    // })
     gender: enums.Gender
     
-    @Column({
-        type: 'enum',
-        enum: enums.Role,
-        default: enums.Role.USER
-    })
+    // @Column({
+    //     type: 'enum',
+    //     enum: enums.Role,
+    //     default: enums.Role.USER
+    // })
     role: enums.Role
 
-    @Column({
-        type: 'enum',
-        enum: enums.Country,
-        default: enums.Country.INDIA
-    })
+    // @Column({
+    //     type: 'enum',
+    //     enum: enums.Country,
+    //     default: enums.Country.INDIA
+    // })
     country: enums.Country
 
-    @Column({
-        type: 'enum',
-        enum: enums.Search,
-        default: enums.Search.ALL,
-        name: 'search_for'
-    }) 
+    // @Column({
+    //     type: 'enum',
+    //     enum: enums.Search,
+    //     default: enums.Search.ALL,
+    //     name: 'search_for'
+    // }) 
     searchFor: enums.Search
 
-    @Column({
-        nullable: true,
-        name: 'search_in'
-    }) 
+    // @Column({
+    //     nullable: true,
+    //     name: 'search_in'
+    // }) 
     searchIn: string
 
-    @Column({
-        default: false
-    })
+    // @Column({
+    //     default: false
+    // })
     verified: boolean
 }

@@ -19,16 +19,23 @@ export enum Country {
 }
 
 export enum StatusCodes {
-    BAD_REQUEST = 400,
-    NOT_FOUND = 404,
-
     OK = 200,
     CREATED = 201,
+
+    BAD_REQUEST = 400,
+    UNAUTHORIZED = 401,
+    NOT_FOUND = 404,
+    INVALID_TOKEN = 498,
 
     INTERNAL_SERVER = 500
 }
 
 export enum Errors {
+    TOKEN_NOT_SUPPLIED = 'Token not supplied',
+    TOKEN_INVALID = 'Token invalid',
+    TOKEN_EXPIRED = 'Token expired',
+    INVALID_TOKEN_PARAMS = 'Token params invalid',
+
     INVALID_VERIFICATION_CODE = 'Invalid verification code',
     VERIFICATION_CODE_EXPIRED = 'Verification code expired',
     VERIFICATION_CODE_ISSUED = 'Verification code issued recently',
@@ -40,9 +47,4 @@ export enum Errors {
     DUPLICATE_USER = 'User already exists with this email',
 
     INTERNAL_SERVER = 'Internal server error',
-
-}
-
-export enum ErrorsMessages {
-    VERIFICATION_CODE_EXPIRED = 'Please try resend code option'
 }

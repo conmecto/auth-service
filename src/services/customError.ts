@@ -1,13 +1,12 @@
-export default class CustomError {
+export default class CustomError extends Error {
     private status: number;
     private error: string;
-    private message?: string;
     private path?: string;
 
-    constructor(status: number, error: string, message?: string) {
+    constructor(status: number, error: string) {
+        super();
         this.status = status;
         this.error = error;
-        this.message = message;
     }
 
     get errorObject() {

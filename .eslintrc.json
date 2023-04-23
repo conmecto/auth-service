@@ -14,8 +14,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": [
-    "quotes": [2, "single", { 
-      "avoidavoidEscape": true, "allowTemplateLiterals": true 
-    }]
+    "quotes": ["error", "single", { "avoidavoidEscape": true, "allowTemplateLiterals": true}],
+    "no-restricted-syntax": ["error", "IfStatement > ExpressionStatement > AssignmentExpression"]
   ]
 }

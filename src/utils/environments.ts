@@ -18,9 +18,9 @@ export default {
         database: process.env.DB_NAME || 'postgres',
         password: process.env.DB_PASSWORD || 'postgres'
     },
-    privateKey: {
-        access: process.env.PRIVATE_KEY_ACCESS || 'TEMP_PRIVATE_KEY',
-        refresh: process.env.PRIVATE_KEY_REFRESH || 'TEMP_PRIVATE_KEY'
+    token: {
+        privateKey: process.env.TOKEN_PRIVATE_KEY || 'TEMP_PRIVATE_KEY',
+        publicKey: process.env.TOKEN_PUBLIC_KEY || 'TEMP_PUBLIC_KEY'
     },
     aws: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'TEMP_KEY',

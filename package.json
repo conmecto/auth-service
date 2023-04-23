@@ -9,6 +9,9 @@
   "scripts": {
     "lint": "eslint . --ext .ts"
   },
+  "engines": {
+    "node": "18.14.2"
+  },
   "dependencies": {
     "aws-sdk": "^2.1345.0",
     "cors": "^2.8.5",
@@ -20,7 +23,7 @@
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "typeorm": "^0.3.12"
+    "pg": "^8.10.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -33,6 +36,7 @@
     "@types/morgan": "^1.9.4",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.15.11",
+    "@types/pg": "^8.6.6",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "dotenv": "^16.0.3",

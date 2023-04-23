@@ -1,6 +1,6 @@
-import dbSource from './dbConfig';
+import getDbClient from './dbConfig';
 import { getEmailObj } from './aws';
 
 const emailObj = getEmailObj();
 
-export { dbSource, emailObj }
+export { getDbClient, emailObj }

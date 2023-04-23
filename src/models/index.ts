@@ -1,6 +1,6 @@
 import User from './user';
-import Profile from './profile';
 import City from './city';
 import Verification from './verification';
+import TokenIdentity from './tokenIdentity';
 
-export { User, Profile, City, Verification }
+export { User, City, Verification, TokenIdentity }

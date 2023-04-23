@@ -1,14 +1,18 @@
-import { verifyUser, verifyCode } from './updateUser';
+import addUser from './addUser';
 import CustomError from './customError';
-import { searchCity } from './city';
-import { getUserByEmail } from './getUser';
-import { addUser } from './addUser';
-import { generateAuthToken } from './auth';
-import { getVerification } from './getVerification';
-import { generateVerificationCode } from './updateVerification';
+import getUserByKey from './getUserByKey';
+import generateAuthToken from './auth';
+import getVerification from './getVerification';
+import generateVerificationCode from './updateVerification';
+import verifyCode from './resetVerification';
+import verifyUser from './verifyUser';
+import verifyAuthToken from './verifyAuthToken';
+import searchCity from './city';
 import sendEmail from './email';
+import verifyTokenIdentity from './verifyTokenIdentity';
+import updateTokenIdentity from './updateTokenIdentity';
 
 export { 
-    verifyUser, CustomError, searchCity, getUserByEmail, addUser, verifyCode, generateAuthToken, 
-    getVerification, generateVerificationCode, sendEmail 
+    verifyUser, CustomError, searchCity, getUserByKey, addUser, verifyCode, generateAuthToken, updateTokenIdentity,
+    getVerification, generateVerificationCode, sendEmail, verifyAuthToken, verifyTokenIdentity
 }
