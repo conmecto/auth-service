@@ -1,4 +1,6 @@
-import { emailObj } from '../config';
+import { SendEmailCommand } from '@aws-sdk/client-ses';
+import { emailClient } from '../config';
+import { enums } from '../utils';
 
 const sendEmail = async (
     sender: string,
@@ -6,34 +8,32 @@ const sendEmail = async (
     subject: string,
     text: string
 ): Promise<boolean> => {
-    return new Promise((resolve, reject) => {
-        const params = {
-            Source: sender,
-            Destination: {
-                ToAddresses: [receiver]
-            },
-            Message: {
-                Body: {
-                    Text: {
-                        Charset: 'UTF-8', 
-                        Data: text
-                    }
-                }, 
-                Subject: {
+    const email = new SendEmailCommand({
+        Destination: {
+            ToAddresses: [receiver]
+        },
+        Source: sender,
+        Message: {
+            Body: {
+                Text: {
                     Charset: 'UTF-8', 
-                    Data: subject
+                    Data: text
                 }
+            }, 
+            Subject: {
+                Charset: 'UTF-8',
+                Data: subject
             }
-        };
-        emailObj?.sendEmail(params, (err, data) => {
-            if (err) {
-                console.error(err);
-                reject(false);
-            }
-            console.log(data.MessageId);
-            resolve(true);
-        });
+        }
     });
+    let res: string | undefined = '';
+    try {
+        const sendEmailResponse = await emailClient?.send(email);
+        res = sendEmailResponse?.MessageId;
+    } catch(err) {
+        console.error(enums.PrefixesForLogs.EMAIL_SEND_ERROR + err);
+    }
+    return Boolean(res);
 }
 
 export default sendEmail;

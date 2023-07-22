@@ -1,11 +1,23 @@
+import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
+import { enums } from '../utils';
 
-const verifyCode = async (email: string, verificationCode: number): Promise<boolean> => {
-    const updateQuery = 'udpate verification set code=null, count=0 where email=$1 and code=$2 and Math.floor(extract(epoch from now())*1000) < Math.floor((extract(epoch from issued_at)*1000) + 600000) and deleted_at is null';
-    const updateParams = [email, verificationCode];
+const resetVerification = async (id: number): Promise<boolean> => {
+    const query = `UPDATE VERIFICATION SET code=null, count=0, attempts=0, issued_at=null WHERE id=$1 AND deleted_at IS NULL`;
+    const params = [id];
+    let res: QueryResult | null = null;
     const client = await getDbClient();
-    const res = await client.query(updateQuery, updateParams);
-    return Boolean(res.rowCount);
+    try {
+        console.log(query);
+        console.log(params);
+        res = await client.query(query, params);
+    } catch(err) {
+        console.log(enums.PrefixesForLogs.DB_RESET_VERIFICATION_ERROR + err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return Boolean(res?.rowCount);
 }
 
-export default verifyCode;
+export default resetVerification;

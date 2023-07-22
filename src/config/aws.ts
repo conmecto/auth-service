@@ -1,28 +1,21 @@
-import { SES } from 'aws-sdk';
-import { Agent } from 'http';
+import { SESClient } from '@aws-sdk/client-ses';
 import { Environments } from '../utils';
 
-const getEmailObj = () => {
+const getEmailClient = () => {
     try {
-        const agent = new Agent({
-            keepAlive: true,
-            maxSockets: 25
-        });
-
-        const ses = new SES({ 
-            httpOptions: {
-                agent
-            },
+        const ses = new SESClient({ 
             credentials: {
                 accessKeyId: Environments.aws.accessKeyId,
                 secretAccessKey: Environments.aws.secretAccessKey,
+                
             },
+            region: Environments.aws.region,
             apiVersion: Environments.aws.sesApiVersion
         });
         return ses;
     } catch(err) {
         console.error(err);
     }
- }
+}
 
-export { getEmailObj }
+export { getEmailClient }

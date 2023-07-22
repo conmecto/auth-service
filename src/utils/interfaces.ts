@@ -29,6 +29,7 @@ interface ICreateUserObject {
     email: string,
     name: string,
     dob: Date,
+    city: string,
     country: string,
     searchFor: string,
     searchIn: string,
@@ -39,6 +40,11 @@ interface ICreateUserResponse extends IGenericResponse {
     data: [{
         email: string
     }]
+}
+
+interface IAddUserResponse {
+    userId: number,
+    verificationCode: number
 }
 
 //Login user
@@ -91,8 +97,11 @@ interface ITokenIdentityObj {
 
 //Verification
 interface IVerificationObject {
+    id: number;
+    code: number,
     count: number,
-    issuedAt: Date
+    issuedAt: Date, 
+    attempts: number
 }
 
 //Authentication
@@ -112,8 +121,20 @@ interface IUserObj {
     verified: boolean
 }
 
+interface IUserDetails extends ICreateUserObject {
+    id: number,
+    verified: boolean
+}
+
+
+//Cache
+interface ICacheUserValue { 
+    id: number,
+    verified: boolean
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, IVerificationObject, ITokenPayload, ITokenSignOptions,
-    IUserObj, ITokenVerifyResponse, ITokenIdentityObj
+    IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, IUserDetails
 };

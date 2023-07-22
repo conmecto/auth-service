@@ -25,7 +25,21 @@ export default {
     aws: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'TEMP_KEY',
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'TEMP_SECRET_KEY',
-        sesApiVersion: process.env.AWS_SES_API_VERSION || 'TEMP_API_VERSION'
+        sesApiVersion: process.env.AWS_SES_API_VERSION || 'TEMP_API_VERSION',
+        region: process.env.AWS_REGION || 'TEMP_REGION'
     },
-    email: process.env.email || 'temp email'
+    redis: {
+        host: process.env.REDIS_HOST || 'REDIS_HOST',
+        port: Number(process.env.REDIS_PORT) || 6379, 
+        username: process.env.REDIS_USERNAME || 'REDIS_USERNAME',
+        password: process.env.REDIS_PASSWORD || 'REDIS_PASSWORD',
+        channels: {
+            userCreatedProfile: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE || 'user-created-profile', 
+            userCreatedProfileError: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE_ERROR || 'user-created-profile-error', 
+            userCreatedMatch: process.env.REDIS_CHANNEL_USER_CREATED_MATCH || 'user-created-match',
+            userCreatedMatchError: process.env.REDIS_CHANNEL_USER_CREATED_MATCH_ERROR || 'user-created-match-error',
+        },
+        connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000
+    },
+    email: process.env.EMAIL || 'temp email'
 };

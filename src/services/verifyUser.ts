@@ -1,25 +1,32 @@
+import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
+import { enums } from '../utils';
 
-const verifyUser = async (email: string, verificationCode: number): Promise<boolean> => {
-    const query1 = 'udpate verification set code=null, count=0 where email=$1 and code=$2 and Math.floor(extract(epoch from now())*1000) < Math.floor((extract(epoch from issued_at)*1000) + 600000) and deleted_at is null';
-    const params1 = [email, verificationCode];
-    const query2 = 'update users set verified=$1 where email=$2 and deleted_at is null';
+const verifyUser = async (email: string, verificationId: number): Promise<boolean> => {
+    const query1 = 'UPDATE VERIFICATION SET code=null, count=0, attempts=0, issued_at=null WHERE id=$1 AND deleted_at IS NULL';
+    const params1 = [verificationId];
+    const query2 = 'UPDATE users SET verified=$1 WHERE email=$2 AND deleted_at IS NULL';
     const params2 = [true, email];
 
-    let res = false;
+    let res: QueryResult | null = null;
     const client = await getDbClient();
     try {
         await client.query('BEGIN');
+        console.log(query1);
+        console.log(query2);
+        console.log(params1);
+        console.log(params2);
         await client.query(query1, params1);
-        await client.query(query2, params2);
+        res = await client.query(query2, params2);
         await client.query('COMMIT');
-        res = true;
-    } catch (e) {
+    } catch (err) {
+        console.log(enums.PrefixesForLogs.DB_VERIFY_USER_ERROR + err);
         await client.query('ROLLBACK');
+        throw err;
     } finally {
         client.release();
     }
-    return res;
+    return Boolean(res?.rowCount);
 }
 
 export default verifyUser;

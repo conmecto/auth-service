@@ -5,12 +5,12 @@ const authenticateSilentRequest = async (req: interfaces.IRequestObject): Promis
     const grantType: string | undefined = req.body['grant_type'];
     const refreshToken: string | undefined = req.body['refresh_token']; 
     if (!grantType || !refreshToken || grantType !== 'refresh_token') {
-        throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_TOKEN_PARAMS);
+        throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_TOKEN_PARAMS, enums.ErrorCodes.INVALID_TOKEN_PARAMS);
     }
-    const payload = await verifyAuthToken(refreshToken);
+    const payload = await verifyAuthToken(refreshToken.replace('Bearer ', ''));
     const tokenIdentity = await verifyTokenIdentity(payload.jti, payload.userId);
     if (!tokenIdentity) {
-        throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID);
+        throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID);
     }
     const token = await generateAuthToken({ userId: payload.userId, email: payload.email });
     const exp = new Date(token.exp * 1000);
