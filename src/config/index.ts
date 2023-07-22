@@ -1,3 +1,7 @@
-import dbSource from './dbConfig';
+import getDbClient from './database';
+import { getEmailClient } from './aws';
+import { redisClient1, redisClient2 } from './redis';
 
-export { dbSource }
+const emailClient = getEmailClient();
+
+export { getDbClient, emailClient, redisClient1, redisClient2  }

@@ -18,8 +18,28 @@ export default {
         database: process.env.DB_NAME || 'postgres',
         password: process.env.DB_PASSWORD || 'postgres'
     },
-    privateKey: {
-        access: process.env.PRIVATE_KEY_ACCESS || 'TEMP_PRIVATE_KEY',
-        refresh: process.env.PRIVATE_KEY_REFRESH || 'TEMP_PRIVATE_KEY'
-    }
+    token: {
+        privateKey: process.env.TOKEN_PRIVATE_KEY || 'TEMP_PRIVATE_KEY',
+        publicKey: process.env.TOKEN_PUBLIC_KEY || 'TEMP_PUBLIC_KEY'
+    },
+    aws: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'TEMP_KEY',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'TEMP_SECRET_KEY',
+        sesApiVersion: process.env.AWS_SES_API_VERSION || 'TEMP_API_VERSION',
+        region: process.env.AWS_REGION || 'TEMP_REGION'
+    },
+    redis: {
+        host: process.env.REDIS_HOST || 'REDIS_HOST',
+        port: Number(process.env.REDIS_PORT) || 6379, 
+        username: process.env.REDIS_USERNAME || 'REDIS_USERNAME',
+        password: process.env.REDIS_PASSWORD || 'REDIS_PASSWORD',
+        channels: {
+            userCreatedProfile: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE || 'user-created-profile', 
+            userCreatedProfileError: process.env.REDIS_CHANNEL_USER_CREATED_PROFILE_ERROR || 'user-created-profile-error', 
+            userCreatedMatch: process.env.REDIS_CHANNEL_USER_CREATED_MATCH || 'user-created-match',
+            userCreatedMatchError: process.env.REDIS_CHANNEL_USER_CREATED_MATCH_ERROR || 'user-created-match-error',
+        },
+        connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000
+    },
+    email: process.env.EMAIL || 'temp email'
 };

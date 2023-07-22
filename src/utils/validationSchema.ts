@@ -1,24 +1,25 @@
-import { object, string, number, date } from 'joi';
+import Joi from 'joi';
 import { Gender, Country, Search } from './enums';
-import { PAST_DATE_18_YEARS } from './constants';
+import { PAST_DATE_18_YEARS_MILLIS } from './constants';
 
-const verifyEmailSchema = object({
-    email: string().email().required(),
-    verificationCode: number().min(100000).max(999999).required()
+const verifyEmailSchema = Joi.object({
+    email: Joi.string().email().required(),
+    verificationCode: Joi.number().min(100000).max(999999).required()
 });
 
-const resendCodeSchema = object({
-    email: string().email().required() 
+const resendCodeSchema = Joi.object({
+    email: Joi.string().email().required() 
 });
 
-const createUserSchema = object({
-    email: string().email().required(),
-    name: string().min(3).max(100).required(),
-    country: string().insensitive().valid(...Object.values(Country)).required(),
-    gender: string().insensitive().valid(...Object.values(Gender)).required(),
-    searchFor: string().insensitive().valid(...Object.values(Search)).required(),
-    dob: date().min(PAST_DATE_18_YEARS).required(),
-    searchIn: string().required()
+const createUserSchema = Joi.object({
+    email: Joi.string().email().required(),
+    name: Joi.string().min(3).max(100).required(),
+    city: Joi.string().required(),
+    country: Joi.string().insensitive().valid(...Object.values(Country)).required(),
+    gender: Joi.string().insensitive().valid(...Object.values(Gender)).required(),
+    searchFor: Joi.string().insensitive().valid(...Object.values(Search)).required(),
+    dob: Joi.date().required().less(PAST_DATE_18_YEARS_MILLIS),
+    searchIn: Joi.string().required()
 });
 
 export { verifyEmailSchema, createUserSchema, resendCodeSchema };
