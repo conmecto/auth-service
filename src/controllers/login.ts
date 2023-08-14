@@ -41,7 +41,7 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
     }
 
     const token = await generateAuthToken({ email: loginUserObject.email, userId: user.id });
-    const exp = new Date(token.exp * 1000);
+    const exp = new Date(Date.now() + (token.exp * 1000));
     await updateTokenIdentity({ userId: user.id, exp, jti: token.jti });
     if (!user.verified) {
         await cacheClient.setKey(`user:${loginUserObject.email}`, JSON.stringify({ id: user.id, verified: true }));

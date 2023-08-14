@@ -13,7 +13,7 @@ const authenticateSilentRequest = async (req: interfaces.IRequestObject): Promis
         throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID);
     }
     const token = await generateAuthToken({ userId: payload.userId, email: payload.email });
-    const exp = new Date(token.exp * 1000);
+    const exp = new Date(Date.now() + (token.exp * 1000));
     await updateTokenIdentity({ userId: payload.userId, exp, jti: token.jti });
     return {
         message: constants.TOKEN_VALIDATED,

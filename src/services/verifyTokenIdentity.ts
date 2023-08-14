@@ -3,7 +3,7 @@ import { getDbClient } from '../config';
 import { enums } from '../utils';
 
 const verifyTokenIdentity = async (jti: string, userId: number): Promise<boolean> => {
-    const query = 'SELECT id FROM token_identity WHERE exp < NOW() AND user_id=$1 AND jti=$2 AND used=$3 AND deleted_at IS NULL';
+    const query = 'SELECT id FROM token_identity WHERE exp > NOW() AND user_id=$1 AND jti=$2 AND used=$3 AND deleted_at IS NULL';
     const params = [userId, jti, false];
     const client = await getDbClient();
     let res: QueryResult | null = null;
