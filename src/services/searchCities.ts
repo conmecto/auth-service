@@ -1,9 +1,9 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
-import { enums } from '../utils';
+import { enums, interfaces } from '../utils';
  
-const searchCities = async (cities: string[], country: string): Promise<boolean> => {
-    const query = 'SELECT id FROM city WHERE (name=$1 OR name=$2) AND country=$3';
+const searchCities = async (cities: string[], country: string): Promise<interfaces.ISearchCityResponse[]> => {
+    const query = 'SELECT name, country FROM city WHERE (name=$1 OR name=$2) AND country=$3';
     const params = [cities[0], cities[1], country];
     const client = await getDbClient();
     let res: QueryResult | null = null;
@@ -17,7 +17,7 @@ const searchCities = async (cities: string[], country: string): Promise<boolean>
     } finally {
         client.release();
     } 
-    return cities.length !== res?.rows?.length;
+    return res?.rows?.length ? res.rows : [];
 }
 
 export default searchCities;

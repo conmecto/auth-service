@@ -15,7 +15,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IC
     }
 
     const checkCities = await searchCities([userObject.searchIn, userObject.city], userObject.country);
-    if (!checkCities) {
+    if (!checkCities.length) {
         throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.CITY_NOT_FOUND, enums.ErrorCodes.CITY_NOT_FOUND);
     }
     const dob = new Date(userObject.dob.toString().split('/').map(i => parseInt(i)).reverse().join('-'));

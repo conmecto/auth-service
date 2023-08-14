@@ -24,6 +24,11 @@ interface ICityObject {
     country?: string
 }
 
+interface ISearchCityResponse {
+    name: string,
+    country: string
+}
+
 // Create user 
 interface ICreateUserObject {
     email: string,
@@ -136,5 +141,5 @@ interface ICacheUserValue {
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, IVerificationObject, ITokenPayload, ITokenSignOptions,
-    IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, IUserDetails
+    IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, IUserDetails, ISearchCityResponse
 };
