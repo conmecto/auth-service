@@ -49,7 +49,7 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
     }
     return {
         message: constants.USER_LOGGED_IN,
-        data: [{ access: token.access, refresh: token.refresh }]
+        data: [{ userId: user.id, access: token.access, refresh: token.refresh }]
     }
 }
 

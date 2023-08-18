@@ -64,7 +64,7 @@ interface ITokenPayload {
 }
 
 interface ILoginUserResponse extends IGenericResponse {
-    data: [{ access: string, refresh: string }]
+    data: [{ userId: number, access: string, refresh: string }]
 }
 
 //Token

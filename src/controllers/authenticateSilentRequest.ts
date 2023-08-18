@@ -17,7 +17,7 @@ const authenticateSilentRequest = async (req: interfaces.IRequestObject): Promis
     await updateTokenIdentity({ userId: payload.userId, exp, jti: token.jti });
     return {
         message: constants.TOKEN_VALIDATED,
-        data: [{ access: token.access, refresh: token.refresh }]
+        data: [{ userId: payload.userId, access: token.access, refresh: token.refresh }]
     }
 }
 
