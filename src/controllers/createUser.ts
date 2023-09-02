@@ -23,7 +23,8 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IC
     if (!addUserRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    await cacheClient.setKey(`user:${userObject.email}`, JSON.stringify({ id: addUserRes.userId, verified: false }));
+    await cacheClient.setKey(`user:${addUserRes.userId}`, JSON.stringify({ id: addUserRes.userId, verified: false }));
+    await cacheClient.setKey(`user:${userObject.email}`, JSON.stringify({ id: addUserRes.userId }));
     await sendEmail(Environments.email, userObject.email, constants.VERIFICATION_CODE_EMAIL_SUBJECT, constants.VERIFICATION_CODE_EMAIL_TEXT + addUserRes.verificationCode);
     return {
         message: constants.USER_CREATED,
