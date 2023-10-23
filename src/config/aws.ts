@@ -1,21 +1,29 @@
-import { SESClient } from '@aws-sdk/client-ses';
-import { Environments } from '../utils';
+import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
+import { Environments, interfaces, enums, constants } from '../utils';
 
-const getEmailClient = () => {
+const runAwsFile = () => {};
+
+const snsClient = new SNSClient({ 
+    credentials: {
+        accessKeyId: Environments.aws.accessKeyId,
+        secretAccessKey: Environments.aws.secretAccessKey,
+    },
+    region: Environments.aws.snsRegion
+});
+
+const sendOtp = async ({ userId, extension, number, otp }: interfaces.ISendOtpObj): Promise<boolean> => {
     try {
-        const ses = new SESClient({ 
-            credentials: {
-                accessKeyId: Environments.aws.accessKeyId,
-                secretAccessKey: Environments.aws.secretAccessKey,
-                
-            },
-            region: Environments.aws.region,
-            apiVersion: Environments.aws.sesApiVersion
-        });
-        return ses;
-    } catch(err) {
-        console.error(err);
+        const input = { 
+            PhoneNumber: extension + ' ' + number,
+            Message: constants.OTP_TEXT + otp,
+        };
+        const command = new PublishCommand(input);
+        await snsClient.send(command);
+        return true;
+    } catch(error) {
+        console.log('For userId:', userId, enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error);
     }
+    return false;
 }
 
-export { getEmailClient }
+export { snsClient, runAwsFile, sendOtp }

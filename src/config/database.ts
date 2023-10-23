@@ -2,6 +2,7 @@ import pg, { Pool, PoolClient } from 'pg';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
 
+//PG driver uses UTC for dates so parsing to use local
 const timestampzOid = 1184;
 pg.types.setTypeParser(timestampzOid, function (value) {
   return value
