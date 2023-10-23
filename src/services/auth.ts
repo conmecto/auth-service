@@ -10,7 +10,7 @@ const generateAuthToken = async (data: interfaces.ITokenPayload): Promise<interf
         expiresIn: accessTokenTime,
         algorithm: <Algorithm> constants.TOKEN_ALGORITHM
     };
-    const jwtId = await helpers.getRandomKey(constants.TOKEN_JWT_ID_LENGTH);
+    const jwtId = helpers.getRandomKey(constants.TOKEN_JWT_ID_LENGTH);
     if (!jwtId) throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     const refreshSignOptions = {
         issuer: constants.TOKEN_ISSUER,

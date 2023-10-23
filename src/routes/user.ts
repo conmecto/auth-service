@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
-import { login, createUser, resendVerificationCode, authenticateRequest, authenticateSilentRequest } from '../controllers';
+import { login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest } from '../controllers';
 
 const userRouter = Router();
 
@@ -27,7 +27,7 @@ userRouter.post('/login', async (req: Request, res: Response, next: NextFunction
 userRouter.post('/otp/resend', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await resendVerificationCode(filteredRequest);
+        const controllerResponse = await resendOtp(filteredRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);
     } catch(err) {
         next(err);

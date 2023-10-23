@@ -7,17 +7,17 @@ const authenticateRequest = async (req: interfaces.IRequestObject): Promise<inte
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
     const payload = await verifyAuthToken(accessToken.replace('Bearer ', ''));
-    let userCache = await cacheClient.getUser(`user:${payload.email}`);
+    let userCache = await cacheClient.getUser(`user:${payload.userId}`);
     let userDb: interfaces.IUserObj | null = null; 
     if (!userCache) {
-        userDb = await getUserByKey('email', payload.email);
+        userDb = await getUserByKey('id', payload.userId);
     }
     if (!userCache && !userDb) {
         throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID)
     }
     return {
         message: constants.TOKEN_VALIDATED,
-        data: [{ email: payload.email, userId: payload.userId }]
+        data: [{ userId: payload.userId }]
     }
 }
 

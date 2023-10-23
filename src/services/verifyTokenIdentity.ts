@@ -1,10 +1,11 @@
 import { QueryResult } from 'pg';
+import moment from 'moment';
 import { getDbClient } from '../config';
 import { enums } from '../utils';
 
 const verifyTokenIdentity = async (jti: string, userId: number): Promise<boolean> => {
-    const query = 'SELECT id FROM token_identity WHERE exp > NOW() AND user_id=$1 AND jti=$2 AND used=$3 AND deleted_at IS NULL';
-    const params = [userId, jti, false];
+    const query = 'SELECT id FROM token_identity WHERE expired_at >= $3 AND user_id=$1 AND jti=$2 AND used=false AND deleted_at IS NULL';
+    const params = [userId, jti, moment().toISOString(true)];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
