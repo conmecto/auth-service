@@ -2,18 +2,18 @@ import { redisClient1 as pubClient } from '../config';
 import { Environments, interfaces, enums, constants } from '../utils';
 import { getKey, setKey } from './cache';
 
-const userCreatedMessage = async (data: interfaces.IUserDetails) => {
+const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
     try {
         if (!data || !Object.keys(data).length) {
             return false;
         }
         await pubClient.publish(
             Environments.redis.channels.userCreatedProfile, 
-            Buffer.from(JSON.stringify(data))
+            Buffer.from(JSON.stringify({ ...data, id: data.userId }))
         );
         await pubClient.publish(
             Environments.redis.channels.userCreatedMatch, 
-            Buffer.from(JSON.stringify(data))
+            Buffer.from(JSON.stringify({ ...data, id: data.userId }))
         );
         return true;
     } catch(err) {

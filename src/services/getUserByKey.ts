@@ -2,8 +2,8 @@ import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
 import { interfaces, enums } from '../utils';
 
-const getUserByKey = async <T>(key: string, value: T): Promise<interfaces.IUserObj> => {
-    const query = `SELECT id, email, verified FROM users WHERE ${key}=$1 AND deleted_at IS NULL`;
+const getUserByKey = async <T>(key: string, value: T): Promise<interfaces.IUserObj | null> => {
+    const query = `SELECT id, verified FROM users WHERE ${key}=$1 AND deleted_at IS NULL`;
     const params = [value];
     const client = await getDbClient();
     let res: QueryResult | null = null;
@@ -17,7 +17,7 @@ const getUserByKey = async <T>(key: string, value: T): Promise<interfaces.IUserO
     } finally {
         client.release();
     }    
-    return res?.rows[0];
+    return res?.rows?.length ? res.rows[0] : null;
 }
 
 export default getUserByKey;
