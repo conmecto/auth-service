@@ -23,10 +23,9 @@ export default {
         publicKey: process.env.TOKEN_PUBLIC_KEY || 'TEMP_PUBLIC_KEY'
     },
     aws: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'TEMP_KEY',
+        accessKeyId: process.env.AWS_ACCESS_KEY || 'TEMP_KEY',
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'TEMP_SECRET_KEY',
-        sesApiVersion: process.env.AWS_SES_API_VERSION || 'TEMP_API_VERSION',
-        region: process.env.AWS_REGION || 'TEMP_REGION'
+        snsRegion: process.env.AWS_SNS_REGION || 'TEMP_REGION'
     },
     redis: {
         host: process.env.REDIS_HOST || 'REDIS_HOST',

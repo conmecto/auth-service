@@ -19,6 +19,10 @@ export enum Country {
     INDIA = 'india'
 }
 
+export enum PhoneExtension {
+    'india' = '+91',
+}
+
 export enum StatusCodes {
     OK = 200,
     CREATED = 201,
@@ -41,11 +45,9 @@ export enum Errors {
     TOKEN_EXPIRED = 'Token expired',
     INVALID_TOKEN_PARAMS = 'Token params invalid',
 
-    INVALID_VERIFICATION_CODE = 'Invalid verification code',
-    VERIFICATION_CODE_EXPIRED = 'Verification code expired',
-    VERIFICATION_CODE_ISSUED_RECENTLY = 'Verification code issued recently',
-    VERIFICATION_CODE_GENERATE_LIMIT = 'Verification daily limit reached for generating code',
-    VERIFICATION_CODE_ATTEMPTS_LIMIT = 'Verification attempt limit reached',
+    OTP_RESEND_LIMIT = 'Otp resend limit reached',
+    OTP_VALIDATION_ATTEMPTS_LIMIT = 'Otp validation attempt limit reached',
+    OTP_INVALID = 'Otp invalid or expired',
 
     CITY_NOT_FOUND = 'City not found',
     USER_NOT_FOUND = 'User not found',
@@ -66,11 +68,9 @@ export enum ErrorCodes {
     TOKEN_EXPIRED = 'TOKEN_EXPIRED',
     INVALID_TOKEN_PARAMS = 'INVALID_TOKEN_PARAMS',
 
-    INVALID_VERIFICATION_CODE = 'INVALID_VERIFICATION_CODE',
-    VERIFICATION_CODE_EXPIRED = 'VERIFICATION_CODE_EXPIRED',
-    VERIFICATION_CODE_ISSUED_RECENTLY = 'VERIFICATION_CODE_ISSUED_RECENTLY',
-    VERIFICATION_CODE_GENERATE_LIMIT = 'VERIFICATION_CODE_GENERATE_LIMIT',
-    VERIFICATION_CODE_ATTEMPTS_LIMIT = 'VERIFICATION_CODE_ATTEMPTS_LIMIT',
+    OTP_RESEND_LIMIT = 'OTP_RESEND_LIMIT',
+    OTP_VALIDATION_ATTEMPTS_LIMIT = 'OTP_VALIDATION_ATTEMPTS_LIMIT',
+    OTP_INVALID = 'OTP_INVALID',
 
     CITY_NOT_FOUND = 'CITY_NOT_FOUND',
     USER_NOT_FOUND = 'USER_NOT_FOUND',
@@ -102,16 +102,13 @@ export enum PrefixesForLogs {
     DB_CONNECTED = 'DB connection successful: ',
     DB_CONNECTION_FAILED = 'DB connection failed: ',
     DB_INSERT_USER_ERROR = 'DB insert user error: ',
-    DB_VERIFY_USER_ERROR = 'DB verify user error: ', 
-    DB_RESET_VERIFICATION_ERROR = 'DB reset verification error: ', 
+    DB_VERIFY_OTP_ERROR = 'DB verify otp error: ', 
     DB_GET_USER_BY_KEY_ERROR = 'DB get user by key error: ',
-    DB_GET_USER_DETAILS_ERROR = 'DB get user details error: ',
+    DB_GET_USER_BY_NUMBER_ERROR = 'DB get user by number error: ',
     DB_VERIFY_TOKEN_IDENTITY_ERROR = 'DB verify token identity error: ',
-    DB_UPDATE_VERIFICATION_ERROR = 'DB update verification error: ',
     DB_UPDATE_TOKEN_IDENTITY_ERROR = 'DB update token identity error: ',
     DB_SEARCH_CITIES_ERROR = 'DB search cities error: ',
-    DB_GET_VERIFICATION_ERROR = 'DB get verification error: ',
-    DB_UPDATE_VERIFICATION_ATTEMPTS_ERROR = 'DB update verification attempts error: ',
+    DB_ADD_OTP_ERROR = 'DB add otp error: ',
 
-    EMAIL_SEND_ERROR = 'Email send error: '
+    AWS_SEND_OTP_ERROR = 'Aws send otp error: '
 }

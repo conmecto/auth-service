@@ -24,14 +24,10 @@ interface ICityObject {
     country?: string
 }
 
-interface ISearchCityResponse {
-    name: string,
-    country: string
-}
-
 // Create user 
 interface ICreateUserObject {
-    email: string,
+    extension: string,
+    number: string,
     name: string,
     dob: Date,
     city: string,
@@ -43,23 +39,27 @@ interface ICreateUserObject {
 
 interface ICreateUserResponse extends IGenericResponse {
     data: [{
-        email: string
+        userId: number,
+        code: number,
+        token: string
     }]
 }
 
 interface IAddUserResponse {
-    userId: number,
-    verificationCode: number
+    userId: number
 }
 
 //Login user
 interface ILoginUserObject {
-    email: string,
-    verificationCode: number
+    extension: string,
+    number: string,
+    code: number,
+    token: string
 }
 
 interface ITokenPayload {
-    email: string,
+    extension: string,
+    number: string,
     userId: number
 }
 
@@ -84,7 +84,8 @@ interface ITokenSignOptions {
 
 interface ITokenVerifyResponse {
     userId: number,
-    email: string,
+    extension: string,
+    number: string,
     jti: string;
     exp: number;
     iss?: string;
@@ -97,22 +98,12 @@ interface ITokenVerifyResponse {
 interface ITokenIdentityObj {
     userId: number,
     jti: string;
-    exp: Date;
-}
-
-//Verification
-interface IVerificationObject {
-    id: number;
-    code: number,
-    count: number,
-    issuedAt: Date, 
-    attempts: number
+    expiredAt: string;
 }
 
 //Authentication
 interface IAuthVerifyResponse {
-    userId: number,
-    email: string
+    userId: number
 }
 
 interface IAuthenticationResponse extends IGenericResponse {
@@ -122,15 +113,8 @@ interface IAuthenticationResponse extends IGenericResponse {
 //Get User
 interface IUserObj {
     id: number,
-    email: string,
     verified: boolean
 }
-
-interface IUserDetails extends ICreateUserObject {
-    id: number,
-    verified: boolean
-}
-
 
 //Cache
 interface ICacheUserValue { 
@@ -138,8 +122,37 @@ interface ICacheUserValue {
     verified: boolean
 }
 
+interface ISendOtpObj {
+    userId: number,
+    extension: string,
+    number: string,
+    otp: number
+}
+
+interface IVerifyOtpPayload {
+    userId: number,
+    code: number,
+    token: string,
+    verifyUser: boolean
+}
+
+interface IGetUserByNumberRes {
+    userId: number,
+    otpResendAttempts: number,
+    otpValidationAttempts: number,
+    verified: boolean,
+    name: string,
+    dob: Date,
+    city: string,
+    country: string,
+    searchFor: string,
+    searchIn: string,
+    gender: string
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
-    ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, IVerificationObject, ITokenPayload, ITokenSignOptions,
-    IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, IUserDetails, ISearchCityResponse
+    ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, ITokenPayload, ITokenSignOptions,
+    IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, ISendOtpObj, 
+    IVerifyOtpPayload, IGetUserByNumberRes
 };
