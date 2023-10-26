@@ -19,7 +19,7 @@ const resendOtp = async (req: interfaces.IRequestObject): Promise<interfaces.ICr
     await sendOtp({ userId: user.userId, extension, number, otp: otpRes.code });
     return {
         message: 'OTP sent successfully',
-        data: [{ userId: user.userId, ...otpRes }]
+        data: [{ userId: user.userId, token: otpRes.token }]
     };
 }
 

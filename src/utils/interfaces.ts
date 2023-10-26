@@ -40,7 +40,6 @@ interface ICreateUserObject {
 interface ICreateUserResponse extends IGenericResponse {
     data: [{
         userId: number,
-        code: number,
         token: string
     }]
 }
