@@ -10,9 +10,11 @@ import updateTokenIdentity from './updateTokenIdentity';
 import * as cacheClient from './cache';
 import { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage } from './message';
 import getUserByNumber from './getUserByNumber';
+import getCitiesByCountry from './getCitiesByCountry';
 
 export { 
     CustomError, getUserByKey, addUser, verifyOtp, generateAuthToken, updateTokenIdentity,
     addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, userCreatedMessage,
-    getUserByNumber, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage 
+    getUserByNumber, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage,
+    getCitiesByCountry
 }

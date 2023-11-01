@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
 import { addUser, CustomError, cacheClient, addOtp} from '../services';
 import { sendOtp } from '../config';
@@ -5,8 +6,8 @@ import { sendOtp } from '../config';
 const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.ICreateUserResponse> => {
     await validationSchema.createUserSchema.validateAsync(req.body);
     const userObject = <interfaces.ICreateUserObject>req.body;
- 
-    const dob = new Date(userObject.dob.toString().split('/').map(i => parseInt(i)).reverse().join('-'));
+    
+    const dob = moment(userObject.dob).set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0}).toISOString(true);
     const phoneExtension = enums.PhoneExtension[userObject.country];
     const addUserRes = await addUser({ ...userObject, dob, extension: phoneExtension });
     if (!addUserRes) {
@@ -21,7 +22,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IC
     }
     return {
         message: constants.USER_CREATED,
-        data: [{ ...addUserRes, ...{ code: <number>otpRes?.code, token: <string>otpRes?.token} }]
+        data: [{ userId: addUserRes.userId, token: <string>otpRes?.token }]
     }
 }
 

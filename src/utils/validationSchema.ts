@@ -25,4 +25,8 @@ const createUserSchema = Joi.object({
     searchIn: Joi.string().required()
 });
 
-export { verifyOtpSchema, createUserSchema, resendCodeSchema };
+const getCitiesSchema = Joi.object({
+    country: Joi.string().valid(...Object.values(Country)).required(),
+});
+
+export { verifyOtpSchema, createUserSchema, resendCodeSchema, getCitiesSchema };

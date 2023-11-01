@@ -29,7 +29,7 @@ interface ICreateUserObject {
     extension: string,
     number: string,
     name: string,
-    dob: Date,
+    dob: string,
     city: string,
     country: string,
     searchFor: string,

@@ -3,5 +3,7 @@ import createUser from './createUser';
 import resendOtp from './resendOtp';
 import authenticateRequest from './authenticateRequest';
 import authenticateSilentRequest from './authenticateSilentRequest';
+import findNumber from './findNumber';
+import getCities from './getCities';
 
-export { login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest }
+export { login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities }

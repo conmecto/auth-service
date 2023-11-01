@@ -109,6 +109,7 @@ export enum PrefixesForLogs {
     DB_UPDATE_TOKEN_IDENTITY_ERROR = 'DB update token identity error: ',
     DB_SEARCH_CITIES_ERROR = 'DB search cities error: ',
     DB_ADD_OTP_ERROR = 'DB add otp error: ',
+    DB_GET_CITIES_ERROR = 'DB get cities error: ',
 
     AWS_SEND_OTP_ERROR = 'Aws send otp error: '
 }
