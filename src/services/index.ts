@@ -11,10 +11,11 @@ import * as cacheClient from './cache';
 import { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage } from './message';
 import getUserByNumber from './getUserByNumber';
 import getCitiesByCountry from './getCitiesByCountry';
+import userLogout from './userLogout';
 
 export { 
     CustomError, getUserByKey, addUser, verifyOtp, generateAuthToken, updateTokenIdentity,
     addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, userCreatedMessage,
     getUserByNumber, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage,
-    getCitiesByCountry
+    getCitiesByCountry, userLogout
 }

@@ -110,6 +110,7 @@ export enum PrefixesForLogs {
     DB_SEARCH_CITIES_ERROR = 'DB search cities error: ',
     DB_ADD_OTP_ERROR = 'DB add otp error: ',
     DB_GET_CITIES_ERROR = 'DB get cities error: ',
+    DB_LOGOUT_ERROR = 'DB logout error: ',
 
     AWS_SEND_OTP_ERROR = 'Aws send otp error: '
 }

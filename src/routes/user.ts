@@ -1,6 +1,9 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
-import { login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities } from '../controllers';
+import { 
+    login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities,
+    logout 
+} from '../controllers';
 
 const userRouter = Router();
 
@@ -39,6 +42,16 @@ userRouter.post('/login', async (req: Request, res: Response, next: NextFunction
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await login(filteredRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);
+    } catch(err) {
+        next(err);
+    }
+});
+
+userRouter.post('/:userId/logout', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filteredRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await logout(filteredRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);    
     } catch(err) {
         next(err);
     }
