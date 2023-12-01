@@ -17,7 +17,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IC
         addOtp(addUserRes.userId),
         cacheClient.setKey(`user:${addUserRes.userId}`, JSON.stringify({ id: addUserRes.userId, verified: false }))
     ]);
-    if (otpRes?.code) {
+    if (otpRes?.code && Environments.sendOtp) {
         await sendOtp({ userId: addUserRes.userId, extension: phoneExtension, number: userObject.number, otp: otpRes.code });
     }
     return {

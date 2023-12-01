@@ -1,4 +1,4 @@
-import { interfaces, validationSchema, enums, constants } from '../utils';
+import { interfaces, validationSchema, enums, constants, Environments } from '../utils';
 import { CustomError, getUserByNumber, addOtp } from '../services';
 import { sendOtp } from '../config';
 
@@ -16,7 +16,9 @@ const resendOtp = async (req: interfaces.IRequestObject): Promise<interfaces.ICr
     if (!otpRes?.code) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    await sendOtp({ userId: user.userId, extension, number, otp: otpRes.code });
+    if (Environments.sendOtp) {
+        await sendOtp({ userId: user.userId, extension, number, otp: otpRes.code });
+    }
     return {
         message: 'OTP sent successfully',
         data: [{ userId: user.userId, token: otpRes.token }]

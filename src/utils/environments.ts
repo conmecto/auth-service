@@ -40,5 +40,6 @@ export default {
         },
         connectTimeout: Number(process.env.REDIS_CONNECT_TIMEOUT) || 30000
     },
-    email: process.env.EMAIL || 'temp email'
+    email: process.env.EMAIL || 'temp email',
+    sendOtp: process.env.SEND_OTP === 'true'
 };
