@@ -27,7 +27,7 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
 
-    const token = await generateAuthToken({ userId: user.userId, extension: loginUserObject.extension, number: loginUserObject.number });
+    const token = await generateAuthToken({ userId: user.userId });
     const exp = moment().add(token.exp, 'seconds').toISOString(true);
     await updateTokenIdentity({ userId: user.userId, expiredAt: exp, jti: token.jti });
     if (!user.verified) {

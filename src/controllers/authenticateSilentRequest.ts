@@ -13,7 +13,7 @@ const authenticateSilentRequest = async (req: interfaces.IRequestObject): Promis
     if (!tokenIdentity) {
         throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID);
     }
-    const token = await generateAuthToken({ userId: payload.userId, extension: payload.extension, number: payload.number });
+    const token = await generateAuthToken({ userId: payload.userId });
     const exp = moment().add(token.exp, 'seconds').toISOString(true);
     await updateTokenIdentity({ userId: payload.userId, expiredAt: exp, jti: token.jti });
     return {

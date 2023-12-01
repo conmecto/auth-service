@@ -57,8 +57,6 @@ interface ILoginUserObject {
 }
 
 interface ITokenPayload {
-    extension: string,
-    number: string,
     userId: number
 }
 
