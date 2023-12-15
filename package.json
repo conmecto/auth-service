@@ -10,6 +10,8 @@
     "lint": "eslint . --ext .ts",
     "prestart:dev": "rm -rf ./dist && npm run build",
     "start:dev": "NODE_ENV=dev node dist/index.js",
+    "prestart:prod": "rm -rf ./dist && npm run build",
+    "start:prod": "NODE_ENV=prod node dist/index.js",
     "build": "tsc"
   },
   "engines": {

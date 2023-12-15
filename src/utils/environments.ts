@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === 'dev') {
 
 export default {
     env: process.env.NODE_ENV || 'dev',
+    secure: process.env.SECURE === 'true' || false,
     server: {
         port: process.env.PORT || 8080
     },
