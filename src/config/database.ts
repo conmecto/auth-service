@@ -31,7 +31,7 @@ const pool = new Pool({
 //PG driver uses UTC for dates so parsing to use local
 const timestampzOid = 1184;
 pg.types.setTypeParser(timestampzOid, function (value) {
-  return value
+    return value === null ? null : new Date(value);
 });
 
 pool.on('error', (err, client) => {
