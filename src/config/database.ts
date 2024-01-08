@@ -3,11 +3,6 @@ import { readFileSync } from 'fs';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
 
-//PG driver uses UTC for dates so parsing to use local
-const timestampzOid = 1184;
-pg.types.setTypeParser(timestampzOid, function (value) {
-  return value
-});
 
 const pool = new Pool({
     host: Environments.database.host,
@@ -18,13 +13,25 @@ const pool = new Pool({
     max: constants.DB_MAX_CLIENTS,
     idleTimeoutMillis: constants.DB_IDLE_TIMEOUT_MILLIS,
     connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS,
-    ssl: {
-        ...(Environments.env === 'prod' ? {
-            ca: readFileSync('./key.pem')
-        } : {
-            rejectUnauthorized: false
-        })
-    }
+    ...(Environments.env === 'prod' ? {
+            ssl: {
+                ca: readFileSync('./key.pem')
+            }
+        } : (
+            Environments.env === 'test' ? 
+            {
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            } : {}
+        )
+    )
+});
+
+//PG driver uses UTC for dates so parsing to use local
+const timestampzOid = 1184;
+pg.types.setTypeParser(timestampzOid, function (value) {
+  return value
 });
 
 pool.on('error', (err, client) => {
