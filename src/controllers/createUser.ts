@@ -9,7 +9,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IC
     
     const dob = moment(userObject.dob).set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0}).toISOString(true);
     const phoneExtension = enums.PhoneExtension[userObject.country];
-    const addUserRes = await addUser({ ...userObject, dob, extension: phoneExtension });
+    const addUserRes = await addUser({ ...userObject, dob, extension: phoneExtension, name: userObject.name.toLowerCase() });
     if (!addUserRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
