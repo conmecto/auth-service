@@ -22,7 +22,7 @@ const sendOtp = async ({ userId, extension, number, otp }: interfaces.ISendOtpOb
         await snsClient.send(command);
         return true;
     } catch(error) {
-        await logger('For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error);
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error);
     }
     return false;
 }
