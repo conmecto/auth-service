@@ -12,10 +12,11 @@ import { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateE
 import getUserByNumber from './getUserByNumber';
 import getCitiesByCountry from './getCitiesByCountry';
 import userLogout from './userLogout';
+import logger from './logger';
 
 export { 
     CustomError, getUserByKey, addUser, verifyOtp, generateAuthToken, updateTokenIdentity,
     addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, userCreatedMessage,
     getUserByNumber, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage,
-    getCitiesByCountry, userLogout
+    getCitiesByCountry, userLogout, logger
 }

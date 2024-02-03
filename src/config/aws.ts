@@ -1,5 +1,6 @@
 import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 import { Environments, interfaces, enums, constants } from '../utils';
+import { logger } from '../services';
 
 const runAwsFile = () => {};
 
@@ -21,7 +22,7 @@ const sendOtp = async ({ userId, extension, number, otp }: interfaces.ISendOtpOb
         await snsClient.send(command);
         return true;
     } catch(error) {
-        console.log('For userId:', userId, enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error);
+        await logger('For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error);
     }
     return false;
 }

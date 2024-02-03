@@ -1,6 +1,7 @@
 import { sign, Algorithm } from 'jsonwebtoken';
 import { interfaces, Environments, constants, enums, helpers } from '../utils';
 import CustomError from './customError';
+import logger from './logger';
 
 const generateAuthToken = async (data: interfaces.ITokenPayload): Promise<interfaces.IToken> => {
     const accessTokenTime = constants.ACCESS_TOKEN_TIME_SECONDS;
@@ -35,7 +36,7 @@ const signToken = async (payload: interfaces.IGeneric, signOptions: interfaces.I
     const token: string | undefined = await new Promise(resolve => {
         sign(payload, key, { ...signOptions, algorithm }, (err, token) => {
             if (err) {
-                console.error(enums.PrefixesForLogs.AUTH_TOKEN_SIGN_IN_ERROR + err);
+                logger(enums.PrefixesForLogs.AUTH_TOKEN_SIGN_IN_ERROR + err);
             }   
             resolve(token);
         });

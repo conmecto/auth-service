@@ -1,6 +1,7 @@
 import { redisClient1 as pubClient } from '../config';
 import { Environments, interfaces, enums, constants } from '../utils';
 import { getKey, setKey } from './cache';
+import logger from './logger';
 
 const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
     try {
@@ -17,13 +18,12 @@ const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
         );
         return true;
     } catch(err) {
-        console.error(enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + err);
+        await logger(enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + err);
         return false;
     }
 }
 
 const handleProfileCreateErrorMessage = async (message: any, channel: string) => {
-    console.log(enums.PrefixesForLogs.REDIS_PROFILE_CREATE_ERROR + channel);
     const parsedMessage = JSON.parse(message);
     const key = parsedMessage?.id + constants.REDIS_PUBLISH_MESSAGE_PROFILE_CACHE_KEY;
     const count = await getKey(key);
@@ -34,12 +34,11 @@ const handleProfileCreateErrorMessage = async (message: any, channel: string) =>
         );
         await setKey(parsedMessage?.id + constants.REDIS_PUBLISH_MESSAGE_PROFILE_CACHE_KEY, (count === null ? 0 : parseInt(count) + 1) + '');
     } else {
-        console.log(enums.PrefixesForLogs.REDIS_PROFILE_CREATE_MAX_TRY_REACHED + channel);
+        await logger(enums.PrefixesForLogs.REDIS_PROFILE_CREATE_MAX_TRY_REACHED + channel);
     }
 }
 
 const handleMatchCreateErrorMessage = async (message: any, channel: string) => {
-    console.log(enums.PrefixesForLogs.REDIS_MATCH_CREATE_ERROR + channel);
     const parsedMessage = JSON.parse(message);
     const key = parsedMessage?.id + constants.REDIS_PUBLISH_MESSAGE_MATCH_CACHE_KEY;
     const count = await getKey(key);
@@ -50,7 +49,7 @@ const handleMatchCreateErrorMessage = async (message: any, channel: string) => {
         );
         await setKey(parsedMessage?.id + constants.REDIS_PUBLISH_MESSAGE_MATCH_CACHE_KEY, (count === null ? 0 : parseInt(count) + 1) + '');
     } else {
-        console.log(enums.PrefixesForLogs.REDIS_MATCH_CREATE_MAX_TRY_REACHED+ channel);
+        await logger(enums.PrefixesForLogs.REDIS_MATCH_CREATE_MAX_TRY_REACHED+ channel);
     }
 }
 

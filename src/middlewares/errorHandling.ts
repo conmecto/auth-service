@@ -2,9 +2,10 @@ import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 import { ValidationError, } from 'joi';
 import { CustomError } from '../services';
 import { enums } from '../utils';
+import { logger } from '../services';
 
 export const errorHandler: ErrorRequestHandler = async (err: any, req: Request, res: Response, next: NextFunction) => {
-    console.error('Error handler', err);
+    await logger('Error handler ' + err);
     let newError: CustomError;
     if (err instanceof CustomError) {
         newError = err;

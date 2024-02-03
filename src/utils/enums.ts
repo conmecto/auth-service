@@ -98,6 +98,7 @@ export enum PrefixesForLogs {
     REDIS_PROFILE_CREATE_MAX_TRY_REACHED = 'Redis profile create max try reached: ',
     REDIS_MATCH_CREATE_MAX_TRY_REACHED = 'Redis match create max try reached: ',
     REDIS_MATCH_CREATE_ERROR = 'Redis match user create error: ',
+    REDIS_LOGGING_CHANNEL_ERROR = 'Redis logging channel error: ',
 
     DB_CONNECTED = 'DB connection successful: ',
     DB_CONNECTION_FAILED = 'DB connection failed: ',

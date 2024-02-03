@@ -2,7 +2,7 @@ import { QueryResult } from 'pg';
 import moment from 'moment';
 import { randomInt } from 'crypto';
 import { getDbClient } from '../config';
-import { enums, constants, helpers } from '../utils';
+import { constants, helpers } from '../utils';
 
 const addOtp = async (userId: number): Promise<{ code: number, token: string } | null> => {
     const token = helpers.getRandomKey(10);
@@ -16,18 +16,11 @@ const addOtp = async (userId: number): Promise<{ code: number, token: string } |
     let res: QueryResult | null = null;
     try {
         await client.query('BEGIN');
-        console.log(query1);
-        console.log(param1);
         await client.query(query1, param1);
-        console.log(query2);
-        console.log(param2);
         res = await client.query(query2, param2);
-        console.log(query3);
-        console.log(param3);
         await client.query(query3, param3);
         await client.query('COMMIT');
     } catch(err) {
-        console.error(enums.PrefixesForLogs.DB_ADD_OTP_ERROR + err);
         await client.query('ROLLBACK')
         throw err;
     } finally {
