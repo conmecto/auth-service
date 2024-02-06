@@ -18,7 +18,7 @@ const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
         );
         return true;
     } catch(err) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + err);
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + JSON.stringify(err));
         return false;
     }
 }
