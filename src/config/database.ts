@@ -2,7 +2,7 @@ import pg, { Pool, PoolClient } from 'pg';
 import { readFileSync } from 'fs';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
-
+import { join } from 'path';
 
 const pool = new Pool({
     host: Environments.database.host,
@@ -15,7 +15,7 @@ const pool = new Pool({
     connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS,
     ...(Environments.env === 'prod' ? {
             ssl: {
-                ca: readFileSync('./key.pem')
+                ca: readFileSync(join(__dirname, '..', '..', '..', '/2', '/key.pem'))
             }
         } : (
             Environments.env === 'test' ? 

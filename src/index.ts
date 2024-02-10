@@ -2,6 +2,7 @@ import express, { Express, urlencoded, json } from 'express';
 import { createServer } from 'http';
 import { createServer as createSecureServer } from 'https';
 import { readFileSync } from 'fs';
+import { join } from 'path';
 import { Environments } from './utils';
 import router from './routes';
 import { errorHandler } from './middlewares';
@@ -15,8 +16,8 @@ app.use('/v1', router, errorHandler);
 
 if (Environments.secure) {
     const options = {
-        key: readFileSync('./key.pem'),
-        cert: readFileSync('./cert.pem')
+        key: readFileSync(join(__dirname, '..', '..', '..', '/1', '/key.pem')),
+        cert: readFileSync(join(__dirname, '..', '..', '..', '/1', '/cert.pem'))
     };
     createSecureServer(options, app).listen(Environments.server.port, 
         () => console.log(`Secure Server is running on port: ${Environments.server.port}`)
