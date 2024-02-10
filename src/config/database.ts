@@ -15,7 +15,8 @@ const pool = new Pool({
     connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS,
     ...(Environments.env === 'prod' ? {
             ssl: {
-                ca: readFileSync(join(__dirname, '..', '..', '/2', '/key.pem'))
+                rejectUnauthorized: false,
+                ca: readFileSync(join(__dirname, '..', '..', '/2', '/key.pem'))?.toString()
             }
         } : (
             Environments.env === 'test' ? 
@@ -27,7 +28,7 @@ const pool = new Pool({
         )
     )
 });
-
+console.log('pool', pool);
 //PG driver uses UTC for dates so parsing to use local
 const timestampzOid = 1184;
 pg.types.setTypeParser(timestampzOid, function (value) {
@@ -39,7 +40,7 @@ pool.on('error', (err, client) => {
 })
 
 pool.on('connect', () => {
-    console.error(enums.PrefixesForLogs.DB_CONNECTED);
+    console.log(enums.PrefixesForLogs.DB_CONNECTED);
 })
 
 const getDbClient = async (): Promise<PoolClient> => {
