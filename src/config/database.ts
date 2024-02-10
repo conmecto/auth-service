@@ -3,7 +3,9 @@ import { readFileSync } from 'fs';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
 import { join } from 'path';
+console.log('__dirname', __dirname);
 
+console.log('join', join(__dirname, '..', '..', '..', '/2', '/key.pem'));
 const pool = new Pool({
     host: Environments.database.host,
     port: Environments.database.port,

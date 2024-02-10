@@ -15,6 +15,9 @@ app.use(urlencoded({ extended: false }));
 app.use('/v1', router, errorHandler);
 
 if (Environments.secure) {
+    console.log('__dir main', __dirname)
+    
+    console.log('join main', join(__dirname, '..', '..', '..', '/1', '/key.pem'))
     const options = {
         key: readFileSync(join(__dirname, '..', '..', '..', '/1', '/key.pem')),
         cert: readFileSync(join(__dirname, '..', '..', '..', '/1', '/cert.pem'))
