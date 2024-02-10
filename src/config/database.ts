@@ -3,9 +3,7 @@ import { readFileSync } from 'fs';
 import { Environments, constants, enums } from '../utils';
 import { CustomError } from '../services';
 import { join } from 'path';
-console.log('__dirname', __dirname);
 
-console.log('join', join(__dirname, '..', '..', '..', '/2', '/key.pem'));
 const pool = new Pool({
     host: Environments.database.host,
     port: Environments.database.port,
@@ -17,7 +15,7 @@ const pool = new Pool({
     connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS,
     ...(Environments.env === 'prod' ? {
             ssl: {
-                ca: readFileSync(join(__dirname, '..', '..', '..', '/2', '/key.pem'))
+                ca: readFileSync(join(__dirname, '..', '..', '/2', '/key.pem'))
             }
         } : (
             Environments.env === 'test' ? 
