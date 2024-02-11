@@ -9,7 +9,7 @@ const findNumber = async (req: interfaces.IRequestObject) => {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
     }
     return {
-      userId: user.userId
+        userId: user.userId
     };
 }
 

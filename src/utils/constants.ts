@@ -19,7 +19,7 @@ const TOKEN_JWT_ID_LENGTH = 16;
 const TOKEN_VALIDATED = 'Token verified successfully';
 const TOKEN_ROTATED = 'Token rotated successfully';
 
-const DB_CONNECTION_TIMEOUT_MILLIS = 2000;
+const DB_CONNECTION_TIMEOUT_MILLIS = 10000;
 const DB_MAX_CLIENTS = 20;
 const DB_IDLE_TIMEOUT_MILLIS = 30000;
 
