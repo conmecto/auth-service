@@ -18,7 +18,7 @@ const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
         );
         return true;
     } catch(err) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + JSON.stringify(err));
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + err?.toString());
         return false;
     }
 }
@@ -49,7 +49,7 @@ const handleMatchCreateErrorMessage = async (message: any, channel: string) => {
         );
         await setKey(parsedMessage?.id + constants.REDIS_PUBLISH_MESSAGE_MATCH_CACHE_KEY, (count === null ? 0 : parseInt(count) + 1) + '');
     } else {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_MATCH_CREATE_MAX_TRY_REACHED+ channel);
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_MATCH_CREATE_MAX_TRY_REACHED + channel);
     }
 }
 

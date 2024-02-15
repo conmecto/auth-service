@@ -36,7 +36,7 @@ const signToken = async (payload: interfaces.IGeneric, signOptions: interfaces.I
     const token: string | undefined = await new Promise(resolve => {
         sign(payload, key, { ...signOptions, algorithm }, (err, token) => {
             if (err) {
-                logger(enums.PrefixesForLogs.AUTH_TOKEN_SIGN_IN_ERROR + JSON.stringify(err));
+                logger(enums.PrefixesForLogs.AUTH_TOKEN_SIGN_IN_ERROR + err?.toString());
             }   
             resolve(token);
         });

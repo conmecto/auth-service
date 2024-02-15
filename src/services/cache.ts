@@ -9,7 +9,7 @@ const setKey = async (key: string, value: string): Promise<boolean | null> => {
             res = await cacheClient.set(key.toLocaleLowerCase(), value);
         } 
     } catch(err) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + <string>JSON.stringify(err));
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_SET_OBJECT + err?.toString());
     }
     return Boolean(res);
 }
@@ -22,7 +22,7 @@ const getUser = async (key: string) => {
             value = tempValue ? JSON.parse(tempValue) : null;
         }
     } catch(err) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_GET_USER + JSON.stringify(err));
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_GET_USER + err?.toString());
     }
     return value;
 }
@@ -34,7 +34,7 @@ const getKey = async (key: string): Promise<string | null> => {
             value = await cacheClient.get(key);
         }
     } catch(err) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + JSON.stringify(err));
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_GET_OBJECT + err?.toString());
     }
     return value;
 }
