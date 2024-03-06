@@ -26,8 +26,9 @@ interface ICityObject {
 
 // Create user 
 interface ICreateUserObject {
-    extension: string,
-    number: string,
+    email: string,
+    // extension: string,
+    // number: string,
     name: string,
     dob: string,
     city: string,
@@ -50,8 +51,9 @@ interface IAddUserResponse {
 
 //Login user
 interface ILoginUserObject {
-    extension: string,
-    number: string,
+    email: string,
+    // extension: string,
+    // number: string,
     code: number,
     token: string
 }
@@ -126,6 +128,13 @@ interface ISendOtpObj {
     otp: number
 }
 
+interface ISendEmailObj {
+    userId: number,
+    email: string,
+    otp: number
+}
+
+
 interface IVerifyOtpPayload {
     userId: number,
     code: number,
@@ -147,9 +156,24 @@ interface IGetUserByNumberRes {
     gender: string
 }
 
+interface IGetUserByEmailRes {
+    email: string,
+    userId: number,
+    otpResendAttempts: number,
+    otpValidationAttempts: number,
+    verified: boolean,
+    name: string,
+    dob: Date,
+    city: string,
+    country: string,
+    searchFor: string,
+    searchIn: string,
+    gender: string
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, ITokenPayload, ITokenSignOptions,
     IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, ISendOtpObj, 
-    IVerifyOtpPayload, IGetUserByNumberRes
+    IVerifyOtpPayload, IGetUserByNumberRes, ISendEmailObj, IGetUserByEmailRes
 };

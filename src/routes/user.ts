@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
 import { 
     login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities,
-    logout 
+    logout, findEmail
 } from '../controllers';
 
 const userRouter = Router();
@@ -10,7 +10,8 @@ const userRouter = Router();
 userRouter.get('/check', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await findNumber(filteredRequest);
+        //const controllerResponse = await findNumber(filteredRequest);
+        const controllerResponse = await findEmail(filteredRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);
     } catch(err) {
         next(err);

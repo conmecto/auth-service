@@ -21,7 +21,7 @@ const addOtp = async (userId: number): Promise<{ code: number, token: string } |
         await client.query(query3, param3);
         await client.query('COMMIT');
     } catch(err) {
-        await client.query('ROLLBACK')
+        await client.query('ROLLBACK');
         throw err;
     } finally {
         client.release();

@@ -1,14 +1,15 @@
 import moment from 'moment';
 import { interfaces, validationSchema, constants, enums } from '../utils';
 import { 
-    verifyOtp, CustomError, cacheClient, getUserByNumber, generateAuthToken, updateTokenIdentity, userCreatedMessage 
+    verifyOtp, CustomError, cacheClient, getUserByNumber, generateAuthToken, updateTokenIdentity, userCreatedMessage,
+    getUserByEmail
 } from '../services';
 
 const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginUserResponse> => {
     await validationSchema.verifyOtpSchema.validateAsync(req.body);
     const loginUserObject = <interfaces.ILoginUserObject>req.body;
 
-    const user = await getUserByNumber(loginUserObject.extension, loginUserObject.number);
+    const user = await getUserByEmail(loginUserObject.email);
     if (!user) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
     }
