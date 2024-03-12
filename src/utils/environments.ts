@@ -26,7 +26,8 @@ export default {
     aws: {
         accessKeyId: process.env.AWS_ACCESS_KEY || 'TEMP_KEY',
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'TEMP_SECRET_KEY',
-        snsRegion: process.env.AWS_SNS_REGION || 'TEMP_REGION'
+        snsRegion: process.env.AWS_SNS_REGION || 'TEMP_REGION',
+        sesRegion: process.env.AWS_SES_REGION || 'TEMP_REGION',
     },
     redis: {
         host: process.env.REDIS_HOST || 'REDIS_HOST',

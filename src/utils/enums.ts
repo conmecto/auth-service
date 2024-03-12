@@ -31,6 +31,7 @@ export enum StatusCodes {
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
     NOT_FOUND = 404,
+    CONFLICT = 409,
     INVALID_TOKEN = 498,
 
     INTERNAL_SERVER = 500
