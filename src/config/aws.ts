@@ -1,4 +1,4 @@
-//import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
+import { SNSClient, CreatePlatformEndpointCommand, PublishCommand, ListPlatformApplicationsCommand } from '@aws-sdk/client-sns';
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import { Environments, interfaces, enums, constants } from '../utils';
 import { logger } from '../services';
@@ -44,13 +44,37 @@ const sendEmail = async ({ userId, email, otp }: interfaces.ISendEmailObj) => {
     return false;
 }
 
-// const snsClient = new SNSClient({ 
-//     credentials: {
-//         accessKeyId: Environments.aws.accessKeyId,
-//         secretAccessKey: Environments.aws.secretAccessKey,
-//     },
-//     region: Environments.aws.snsRegion
-// });
+const snsClient = new SNSClient({ 
+    credentials: {
+        accessKeyId: Environments.aws.accessKeyId,
+        secretAccessKey: Environments.aws.secretAccessKey,
+    },
+    region: Environments.aws.snsRegion
+});
+
+const createUserNotificationEndPoint = async ({ userId, deviceToken }: interfaces.ICreateUserNotificationEndPoint) => {
+    try {
+        let appleIosArn: string | undefined;
+        const command = new ListPlatformApplicationsCommand({});
+        const res = await snsClient.send(command);
+        if (res?.PlatformApplications?.length) {
+            appleIosArn = res.PlatformApplications[0].PlatformApplicationArn;
+        } 
+        if (!appleIosArn) {
+            throw new Error('Platform application arn not found')
+        }
+        const input = {
+            PlatformApplicationArn: appleIosArn,
+            Token: deviceToken,
+            CustomUserData: userId?.toString()
+        }
+        const createCommand = new CreatePlatformEndpointCommand(input);
+        const createRes = await snsClient.send(createCommand);
+        return createRes?.EndpointArn;
+    } catch(error){
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR + error?.toString());
+    }
+}
 
 // const sendOtp = async ({ userId, extension, number, otp }: interfaces.ISendOtpObj): Promise<boolean> => {
 //     try {
@@ -67,4 +91,4 @@ const sendEmail = async ({ userId, email, otp }: interfaces.ISendEmailObj) => {
 //     return false;
 // }
 
-export { sesClient, runAwsFile, sendEmail }
+export { runAwsFile, sendEmail, createUserNotificationEndPoint }

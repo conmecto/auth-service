@@ -2,8 +2,9 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums } from '../utils'; 
 import { 
     login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities,
-    logout, findEmail
+    logout, findEmail, updateDeviceInfo
 } from '../controllers';
+import { authenticateRequestMiddleware } from '../middlewares';
 
 const userRouter = Router();
 
@@ -88,5 +89,14 @@ userRouter.post('/auth/silent', async (req: Request, res: Response, next: NextFu
     }
 });
 
+userRouter.put('/:userId/device', authenticateRequestMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filteredRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await updateDeviceInfo(filteredRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);
+    } catch(err) {
+        next(err);
+    }
+});
 
 export default userRouter;

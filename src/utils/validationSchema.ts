@@ -37,4 +37,9 @@ const logoutSchema = Joi.object({
     userId: Joi.number().required(),
 });
 
-export { verifyOtpSchema, createUserSchema, resendCodeSchema, getCitiesSchema, logoutSchema };
+const deviceUpdateSchema = Joi.object({
+    userId: Joi.number().required(),
+    deviceToken: Joi.string().required(),
+})
+
+export { verifyOtpSchema, createUserSchema, resendCodeSchema, getCitiesSchema, logoutSchema, deviceUpdateSchema };

@@ -171,9 +171,20 @@ interface IGetUserByEmailRes {
     gender: string
 }
 
+interface ICreateUserNotificationEndPoint {
+    userId: number,
+    deviceToken: string,
+}
+
+interface IUpdateUserNotificationEndPoint {
+    deviceToken: string,
+    deviceEndpoint?: string,
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, ITokenPayload, ITokenSignOptions,
     IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, ISendOtpObj, 
-    IVerifyOtpPayload, IGetUserByNumberRes, ISendEmailObj, IGetUserByEmailRes
+    IVerifyOtpPayload, IGetUserByNumberRes, ISendEmailObj, IGetUserByEmailRes, ICreateUserNotificationEndPoint,
+    IUpdateUserNotificationEndPoint
 };
