@@ -2,7 +2,7 @@ import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
 import { interfaces } from '../utils';
 
-const updateUserDeviceInfo = async (userId: string, updateDoc: interfaces.IUpdateUserNotificationEndPoint): Promise<boolean> => {
+const updateUserDeviceInfo = async (userId: number, updateDoc: interfaces.IUpdateUserNotificationEndPoint): Promise<boolean> => {
     const query = updateDoc.deviceEndpoint ? 
         'UPDATE users SET device_token=$2, device_endpoint=$3 WHERE id=$1 AND deleted_at IS NULL' : 
         'UPDATE users SET device_token=$2 WHERE id=$1 AND deleted_at IS NULL';

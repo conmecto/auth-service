@@ -4,6 +4,7 @@ import {
     verifyOtp, CustomError, cacheClient, getUserByNumber, generateAuthToken, updateTokenIdentity, userCreatedMessage,
     getUserByEmail
 } from '../services';
+import updateDeviceInfo from './updateDeviceInfo';
 
 const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginUserResponse> => {
     await validationSchema.verifyOtpSchema.validateAsync(req.body);
@@ -34,6 +35,9 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
     if (!user.verified) {
         await cacheClient.setKey(`user:${user.userId}`, JSON.stringify({ id: user.userId, verified: true }));
         await userCreatedMessage(user);
+    }
+    if (req.body.deviceToken && req.body.deviceToken !== user.deviceToken) {
+        await updateDeviceInfo(user.userId, req.body.deviceToken);
     }
     return {
         message: constants.USER_LOGGED_IN,

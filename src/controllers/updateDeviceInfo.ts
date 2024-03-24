@@ -1,11 +1,8 @@
-import { interfaces, validationSchema, enums } from '../utils';
-import { CustomError, updateUserDeviceInfo } from '../services';
+import { interfaces, enums } from '../utils';
+import { updateUserDeviceInfo, logger } from '../services';
 import { createUserNotificationEndPoint } from '../config';
 
-const updateDeviceInfo = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {
-    const { userId } = req.params;
-    const { deviceToken } = req.body;
-    await validationSchema.deviceUpdateSchema.validateAsync({ userId, deviceToken });
+const updateDeviceInfo = async (userId: number, deviceToken: string): Promise<boolean> => {
     const endpointArn = await createUserNotificationEndPoint({ userId, deviceToken });
     let updateDoc: interfaces.IUpdateUserNotificationEndPoint = {
         deviceToken
@@ -13,13 +10,13 @@ const updateDeviceInfo = async (req: interfaces.IRequestObject): Promise<interfa
     if (endpointArn) {
         updateDoc.deviceEndpoint = endpointArn;
     }
-    const res = await updateUserDeviceInfo(userId, updateDoc);
-    if (!res) {
-        throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
+    try {
+        const res = await updateUserDeviceInfo(userId, updateDoc);
+        return res;
+    } catch(error) {
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.SAVE_DEVICE_INFO_ERROR + error?.toString());
     }
-    return {
-        message: 'User device info updated successfully'
-    };
+    return false;
 }
 
 export default updateDeviceInfo;

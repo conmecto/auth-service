@@ -115,5 +115,7 @@ export enum PrefixesForLogs {
     DB_LOGOUT_ERROR = 'DB logout error: ',
 
     AWS_SEND_OTP_ERROR = 'Aws send otp error: ',
-    AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR = 'Aws create platform endpoint error: '
+    AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR = 'Aws create platform endpoint error: ',
+
+    SAVE_DEVICE_INFO_ERROR = 'Save device info error: '
 }

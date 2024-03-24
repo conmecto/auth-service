@@ -7,7 +7,8 @@ const verifyOtpSchema = Joi.object({
     // number: Joi.string().min(6).required(),
     email: Joi.string().email().required(),
     code: Joi.number().min(100000).max(999999).required(),
-    token: Joi.string().length(10).required()
+    token: Joi.string().length(10).required(),
+    deviceToken: Joi.string().optional()
 });
 
 const resendCodeSchema = Joi.object({
@@ -37,9 +38,4 @@ const logoutSchema = Joi.object({
     userId: Joi.number().required(),
 });
 
-const deviceUpdateSchema = Joi.object({
-    userId: Joi.number().required(),
-    deviceToken: Joi.string().required(),
-})
-
-export { verifyOtpSchema, createUserSchema, resendCodeSchema, getCitiesSchema, logoutSchema, deviceUpdateSchema };
+export { verifyOtpSchema, createUserSchema, resendCodeSchema, getCitiesSchema, logoutSchema };

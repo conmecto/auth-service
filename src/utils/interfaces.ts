@@ -153,7 +153,8 @@ interface IGetUserByNumberRes {
     country: string,
     searchFor: string,
     searchIn: string,
-    gender: string
+    gender: string,
+    deviceToken?: string
 }
 
 interface IGetUserByEmailRes {
