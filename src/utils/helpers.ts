@@ -9,4 +9,8 @@ const getRandomKey = (size: number) => {
     return result;
 }
 
-export { getRandomKey }
+const capitalize = (text: string) => {
+    return text.split(' ').map(t => t.substring(0, 1).toUpperCase() + t.substring(1).toLowerCase()).join(' ');
+}
+
+export { getRandomKey, capitalize }

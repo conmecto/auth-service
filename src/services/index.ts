@@ -8,7 +8,7 @@ import verifyAuthToken from './verifyAuthToken';
 import verifyTokenIdentity from './verifyTokenIdentity';
 import updateTokenIdentity from './updateTokenIdentity';
 import * as cacheClient from './cache';
-import { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage } from './message';
+import { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage, createMatchCreatedPushNotification } from './message';
 import getUserByNumber from './getUserByNumber';
 import getCitiesByCountry from './getCitiesByCountry';
 import userLogout from './userLogout';
@@ -20,5 +20,6 @@ export {
     CustomError, getUserByKey, addUser, verifyOtp, generateAuthToken, updateTokenIdentity,
     addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, userCreatedMessage,
     getUserByNumber, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage,
-    getCitiesByCountry, userLogout, logger, getUserByEmail, updateUserDeviceInfo
+    getCitiesByCountry, userLogout, logger, getUserByEmail, updateUserDeviceInfo, 
+    createMatchCreatedPushNotification
 }

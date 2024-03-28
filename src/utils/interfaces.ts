@@ -182,10 +182,16 @@ interface IUpdateUserNotificationEndPoint {
     deviceEndpoint?: string,
 }
 
+interface ISendPushNotification {
+    userId: number,
+    deviceEndpoint: string,
+    message: string
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, ITokenPayload, ITokenSignOptions,
     IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, ISendOtpObj, 
     IVerifyOtpPayload, IGetUserByNumberRes, ISendEmailObj, IGetUserByEmailRes, ICreateUserNotificationEndPoint,
-    IUpdateUserNotificationEndPoint
+    IUpdateUserNotificationEndPoint, ISendPushNotification
 };

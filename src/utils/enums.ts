@@ -100,6 +100,7 @@ export enum PrefixesForLogs {
     REDIS_MATCH_CREATE_MAX_TRY_REACHED = 'Redis match create max try reached: ',
     REDIS_MATCH_CREATE_ERROR = 'Redis match user create error: ',
     REDIS_LOGGING_CHANNEL_ERROR = 'Redis logging channel error: ',
+    REDIS_HANDLE_PUSH_NOTIFICATION_MATCH_ERROR = 'Redis handle push notification match error: ',
 
     DB_CONNECTED = 'DB connection successful: ',
     DB_CONNECTION_FAILED = 'DB connection failed: ',
@@ -116,6 +117,7 @@ export enum PrefixesForLogs {
 
     AWS_SEND_OTP_ERROR = 'Aws send otp error: ',
     AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR = 'Aws create platform endpoint error: ',
+    AWS_SNS_PUSH_NOTIFICATION_ERROR = 'Aws push notification error: ',
 
     SAVE_DEVICE_INFO_ERROR = 'Save device info error: '
 }

@@ -1,7 +1,8 @@
-import { redisClient1 as pubClient } from '../config';
-import { Environments, interfaces, enums, constants } from '../utils';
+import { redisClient1 as pubClient, sendPushNotification } from '../config';
+import { Environments, interfaces, enums, constants, helpers } from '../utils';
 import { getKey, setKey } from './cache';
 import logger from './logger';
+import getUserDeviceInfo from './getUserDeviceInfo';
 
 const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
     try {
@@ -53,4 +54,23 @@ const handleMatchCreateErrorMessage = async (message: any, channel: string) => {
     }
 }
 
-export { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage }
+const createMatchCreatedPushNotification = async (message: any, channel: string) => {
+    try {
+        const parsedMessage = JSON.parse(message);
+        const userId = parsedMessage?.userId;
+        if (userId) {
+            const user = await getUserDeviceInfo(Number(userId));
+            if (user?.deviceEndpoint) {
+                await sendPushNotification({ 
+                    message: "Hi " + helpers.capitalize(user.name) + ", You have just got a Match! 😉",
+                    userId: user.id,
+                    deviceEndpoint: user.deviceEndpoint
+                });
+            }
+        }
+    } catch(error) {
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_HANDLE_PUSH_NOTIFICATION_MATCH_ERROR + error?.toString());
+    }
+}
+
+export { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage, createMatchCreatedPushNotification }

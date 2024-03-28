@@ -76,6 +76,19 @@ const createUserNotificationEndPoint = async ({ userId, deviceToken }: interface
     }
 }
 
+const sendPushNotification = async ({ userId, message, deviceEndpoint }: interfaces.ISendPushNotification) => {
+    try {
+        const input = {
+            TargetArn: deviceEndpoint,
+            Message: message
+        }
+        const command = new PublishCommand(input);
+        await snsClient.send(command);
+    } catch(error) {
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_PUSH_NOTIFICATION_ERROR + error?.toString());
+    }
+}
+
 // const sendOtp = async ({ userId, extension, number, otp }: interfaces.ISendOtpObj): Promise<boolean> => {
 //     try {
 //         const input = { 
@@ -91,4 +104,4 @@ const createUserNotificationEndPoint = async ({ userId, deviceToken }: interface
 //     return false;
 // }
 
-export { runAwsFile, sendEmail, createUserNotificationEndPoint }
+export { runAwsFile, sendEmail, createUserNotificationEndPoint, sendPushNotification }
