@@ -57,8 +57,10 @@ const createUserNotificationEndPoint = async ({ userId, deviceToken }: interface
         let appleIosArn: string | undefined;
         const command = new ListPlatformApplicationsCommand({});
         const res = await snsClient.send(command);
-        if (res?.PlatformApplications?.length) {
-            appleIosArn = res.PlatformApplications[0].PlatformApplicationArn;
+        if (res?.PlatformApplications?.length && Environments.env === 'prod') {
+            appleIosArn = res.PlatformApplications.find(application => !application.PlatformApplicationArn?.includes('SANDBOX'))?.PlatformApplicationArn;
+        } else if (res?.PlatformApplications?.length) {
+            appleIosArn = res.PlatformApplications.find(application => application.PlatformApplicationArn?.includes('SANDBOX'))?.PlatformApplicationArn;
         } 
         if (!appleIosArn) {
             throw new Error('Platform application arn not found')
