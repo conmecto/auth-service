@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import { redisClient1 as pubClient, sendPushNotification } from '../config';
 import { Environments, interfaces, enums, constants, helpers } from '../utils';
 import { getKey, setKey } from './cache';
@@ -9,13 +10,14 @@ const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
         if (!data || !Object.keys(data).length) {
             return false;
         }
+        const payload = omit(data, ['deviceToken']);
         await pubClient.publish(
             Environments.redis.channels.userCreatedProfile, 
-            Buffer.from(JSON.stringify({ ...data, id: data.userId }))
+            Buffer.from(JSON.stringify({ ...payload, id: data.userId }))
         );
         await pubClient.publish(
             Environments.redis.channels.userCreatedMatch, 
-            Buffer.from(JSON.stringify({ ...data, id: data.userId }))
+            Buffer.from(JSON.stringify({ ...payload, id: data.userId }))
         );
         return true;
     } catch(err) {

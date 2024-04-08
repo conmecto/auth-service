@@ -9,6 +9,7 @@ if (process.env.NODE_ENV === 'dev') {
 export default {
     env: process.env.NODE_ENV || 'dev',
     secure: process.env.SECURE === 'true' || false,
+    appBundleId: process.env.APP_BUNDLE_ID || 'org.reactjs.native.example.conmecto',
     server: {
         port: process.env.PORT || 8080
     },

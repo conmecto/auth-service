@@ -52,6 +52,7 @@ export enum Errors {
 
     CITY_NOT_FOUND = 'City not found',
     USER_NOT_FOUND = 'User not found',
+    INVALID_EMAIL = 'Invalid email',
 
     DUPLICATE_USER = 'User already exists with this email',
 
@@ -75,6 +76,9 @@ export enum ErrorCodes {
 
     CITY_NOT_FOUND = 'CITY_NOT_FOUND',
     USER_NOT_FOUND = 'USER_NOT_FOUND',
+    EMAIL_NOT_FOUND = 'EMAIL_NOT_FOUND',
+
+    INVALID_EMAIL = 'INVALID_EMAIL',
 
     DUPLICATE_USER = 'DUPLICATE_USER',
 
@@ -118,6 +122,8 @@ export enum PrefixesForLogs {
     AWS_SEND_OTP_ERROR = 'Aws send otp error: ',
     AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR = 'Aws create platform endpoint error: ',
     AWS_SNS_PUSH_NOTIFICATION_ERROR = 'Aws push notification error: ',
+
+    APPLE_AUTH_TOKEN_ERROR = 'Apple auth token error: ',
 
     SAVE_DEVICE_INFO_ERROR = 'Save device info error: '
 }

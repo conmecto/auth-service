@@ -1,4 +1,5 @@
 import { QueryResult } from 'pg';
+import { omit } from 'lodash';
 import { getDbClient } from '../config';
 import { interfaces, enums } from '../utils';
 import CustomError from './customError';
@@ -6,8 +7,8 @@ import CustomError from './customError';
 const addUser = async (createUserObject: interfaces.ICreateUserObject): Promise<interfaces.IAddUserResponse | null> => {
     const query1 = 'SELECT id FROM users WHERE email=$1 AND deleted_at IS NULL';
     const param1 = [createUserObject.email];    
-    const query2 = 'INSERT INTO users(city, country, dob, email, gender, name, search_for, search_in) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING users.id';
-    const param2 = [...Object.keys(createUserObject).sort().map(key => createUserObject[key])];    
+    const query2 = 'INSERT INTO users(apple_auth_user_id, city, country, dob, email, gender, name, search_for, search_in, terms_accepted, verified) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING users.id';
+    const param2 = [...Object.keys(omit(createUserObject, ['appleAuthToken', 'deviceToken'])).sort().map(key => createUserObject[key])];    
     let res: QueryResult | null = null;
     const client = await getDbClient();
     try {

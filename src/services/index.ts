@@ -15,11 +15,12 @@ import userLogout from './userLogout';
 import logger from './logger';
 import getUserByEmail from './getUserByEmail';
 import updateUserDeviceInfo from './updateUserDeviceInfo';
+import verifyAppleAuthToken from './verifyAppleAuthToken';
 
 export { 
     CustomError, getUserByKey, addUser, verifyOtp, generateAuthToken, updateTokenIdentity,
     addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, userCreatedMessage,
     getUserByNumber, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage,
     getCitiesByCountry, userLogout, logger, getUserByEmail, updateUserDeviceInfo, 
-    createMatchCreatedPushNotification
+    createMatchCreatedPushNotification, verifyAppleAuthToken
 }

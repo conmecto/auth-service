@@ -1,27 +1,47 @@
 import moment from 'moment';
 import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
-import { addUser, CustomError, cacheClient, addOtp} from '../services';
-import { sendEmail } from '../config';
+import { 
+    addUser, CustomError, cacheClient, addOtp, verifyAppleAuthToken, generateAuthToken, 
+    updateTokenIdentity, userCreatedMessage, getUserByEmail 
+} from '../services';
+import updateDeviceInfo from './updateDeviceInfo';
+//import { sendEmail } from '../config';
 
-const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.ICreateUserResponse> => {
+const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginUserResponse> => {
     await validationSchema.createUserSchema.validateAsync(req.body);
     const userObject = <interfaces.ICreateUserObject>req.body;
+    const verifyRes = await verifyAppleAuthToken(req.body.appleAuthToken, req.body.email);
+    if (!verifyRes) {
+        throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_EMAIL, enums.ErrorCodes.INVALID_EMAIL);
+    }
     const dob = moment(userObject.dob).set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0}).toISOString(true);
     //const phoneExtension = enums.PhoneExtension[userObject.country];
-    const addUserRes = await addUser({ ...userObject, dob, name: userObject.name.toLowerCase() });
+    const addUserRes = await addUser({ ...userObject, dob, name: userObject.name.toLowerCase(), verified: true });
     if (!addUserRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
-    const [otpRes, cacheRes] = await Promise.all([
-        addOtp(addUserRes.userId),
-        cacheClient.setKey(`user:${addUserRes.userId}`, JSON.stringify({ id: addUserRes.userId, verified: false }))
-    ]);
-    if (otpRes?.code && Environments.sendOtp) {
-        await sendEmail({ userId: addUserRes.userId, email: userObject.email, otp: otpRes.code });
+    //const [otpRes, cacheRes] = await Promise.all([
+        //addOtp(addUserRes.userId),
+        //cacheClient.setKey(`user:${addUserRes.userId}`, JSON.stringify({ id: addUserRes.userId, verified: false }))
+    //]);
+    // if (otpRes?.code && Environments.sendOtp) {
+    //     await sendEmail({ userId: addUserRes.userId, email: userObject.email, otp: otpRes.code });
+    // }
+    const user = await getUserByEmail(userObject.email);
+    if (!user) {
+        throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);
     }
+    const token = await generateAuthToken({ userId: user.userId });
+    const exp = moment().add(token.exp, 'seconds').toISOString(true);
+    await updateTokenIdentity({ userId: user.userId, expiredAt: exp, jti: token.jti });
+    if (req.body.deviceToken && req.body.deviceToken !== user.deviceToken) {
+        await updateDeviceInfo(user.userId, req.body.deviceToken);
+    }
+    await cacheClient.setKey(`user:${user.userId}`, JSON.stringify({ id: user.userId, verified: true }));
+    await userCreatedMessage(user);
     return {
-        message: constants.USER_CREATED,
-        data: [{ userId: addUserRes.userId, token: <string>otpRes?.token }]
+        message: constants.USER_LOGGED_IN,
+        data: [{ userId: user.userId, access: token.access, refresh: token.refresh }]
     }
 }
 

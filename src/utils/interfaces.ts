@@ -35,7 +35,12 @@ interface ICreateUserObject {
     country: string,
     searchFor: string,
     searchIn: string,
-    gender: string
+    gender: string,
+    appleAuthToken: string,
+    verified?: boolean,
+    deviceToken?: string,
+    appleAuthUserId?: string,
+    termsAccepted: boolean
 }
 
 interface ICreateUserResponse extends IGenericResponse {
@@ -51,11 +56,15 @@ interface IAddUserResponse {
 
 //Login user
 interface ILoginUserObject {
-    email: string,
+    //email: string,
     // extension: string,
     // number: string,
-    code: number,
-    token: string
+    // code: number,
+    // token: string,
+    userId: number,
+    appleAuthToken: string,
+    deviceToken?: string,
+    appleAuthUserId?: string
 }
 
 interface ITokenPayload {
@@ -112,7 +121,10 @@ interface IAuthenticationResponse extends IGenericResponse {
 //Get User
 interface IUserObj {
     id: number,
-    verified: boolean
+    verified: boolean,
+    email?: string,
+    deviceToken?: string,
+    appleAuthUserId: string
 }
 
 //Cache
@@ -188,10 +200,23 @@ interface ISendPushNotification {
     message: string
 }
 
+interface IAppleAuthTokenPayload {
+    iss: string,
+    aud: string,
+    exp: number,
+    iat: number,
+    sub: string,
+    nonce: string,
+    c_hash?: string,
+    email?: string,
+    email_verified?: string
+    auth_time?: number
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, ITokenPayload, ITokenSignOptions,
     IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, ISendOtpObj, 
     IVerifyOtpPayload, IGetUserByNumberRes, ISendEmailObj, IGetUserByEmailRes, ICreateUserNotificationEndPoint,
-    IUpdateUserNotificationEndPoint, ISendPushNotification
+    IUpdateUserNotificationEndPoint, ISendPushNotification, IAppleAuthTokenPayload
 };
