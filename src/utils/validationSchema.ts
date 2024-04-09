@@ -8,10 +8,10 @@ const verifyOtpSchema = Joi.object({
     // email: Joi.string().email().required(),
     // code: Joi.number().min(100000).max(999999).required(),
     // token: Joi.string().length(10).required(),
-    userId: Joi.number().required(),
+    //userId: Joi.number().required(),
     deviceToken: Joi.string().optional(),
     appleAuthToken: Joi.string().required(),
-    appleAuthUserId: Joi.string().optional()
+    appleAuthUserId: Joi.string().required()
 });
 
 const resendCodeSchema = Joi.object({

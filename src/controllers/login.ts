@@ -9,7 +9,7 @@ import updateDeviceInfo from './updateDeviceInfo';
 const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginUserResponse> => {
     await validationSchema.verifyOtpSchema.validateAsync(req.body);
     const loginUserObject = <interfaces.ILoginUserObject>req.body;
-    const user = await getUserByKey('id', Number(loginUserObject.userId));
+    const user = await getUserByKey('apple_auth_user_id', Number(loginUserObject.appleAuthUserId));
     if (!user) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
     }

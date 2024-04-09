@@ -61,10 +61,10 @@ interface ILoginUserObject {
     // number: string,
     // code: number,
     // token: string,
-    userId: number,
+    //userId: number,
     appleAuthToken: string,
     deviceToken?: string,
-    appleAuthUserId?: string
+    appleAuthUserId: string
 }
 
 interface ITokenPayload {
