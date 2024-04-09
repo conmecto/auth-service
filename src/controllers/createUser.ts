@@ -16,7 +16,18 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
     }
     const dob = moment(userObject.dob).set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0}).toISOString(true);
     //const phoneExtension = enums.PhoneExtension[userObject.country];
-    const addUserRes = await addUser({ ...userObject, dob, name: userObject.name.toLowerCase(), verified: true });
+    const addUserRes = await addUser({ 
+        ...userObject, 
+        verified: true,
+        dob, 
+        email: userObject.email.toLowerCase(),
+        name: userObject.name.toLowerCase(), 
+        city: userObject.city.toLowerCase(),
+        country: userObject.country.toLowerCase(),
+        searchFor: userObject.searchFor.toLowerCase(),
+        searchIn: userObject.searchIn.toLowerCase(),
+        gender: userObject.gender.toLowerCase()
+    });
     if (!addUserRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
