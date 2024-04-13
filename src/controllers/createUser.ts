@@ -2,7 +2,7 @@ import moment from 'moment';
 import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
 import { 
     addUser, CustomError, cacheClient, addOtp, verifyAppleAuthToken, generateAuthToken, 
-    updateTokenIdentity, userCreatedMessage, getUserByEmail 
+    updateTokenIdentity, userCreatedMessage, getUserByKey
 } from '../services';
 import updateDeviceInfo from './updateDeviceInfo';
 //import { sendEmail } from '../config';
@@ -10,7 +10,7 @@ import updateDeviceInfo from './updateDeviceInfo';
 const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginUserResponse> => {
     await validationSchema.createUserSchema.validateAsync(req.body);
     const userObject = <interfaces.ICreateUserObject>req.body;
-    const verifyRes = await verifyAppleAuthToken(req.body.appleAuthToken, req.body.email);
+    const verifyRes = await verifyAppleAuthToken(userObject.appleAuthToken, userObject.appleAuthUserId);
     if (!verifyRes) {
         throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_EMAIL, enums.ErrorCodes.INVALID_EMAIL);
     }
@@ -20,7 +20,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
         ...userObject, 
         verified: true,
         dob, 
-        email: userObject.email.toLowerCase(),
+        ...(userObject.email ? { email: userObject.email?.toLowerCase() } : {}),
         name: userObject.name.toLowerCase(), 
         city: userObject.city.toLowerCase(),
         country: userObject.country.toLowerCase(),
@@ -38,7 +38,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
     // if (otpRes?.code && Environments.sendOtp) {
     //     await sendEmail({ userId: addUserRes.userId, email: userObject.email, otp: otpRes.code });
     // }
-    const user = await getUserByEmail(userObject.email);
+    const user = await getUserByKey('apple_auth_user_id', userObject.appleAuthUserId);
     if (!user) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);
     }

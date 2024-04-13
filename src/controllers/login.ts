@@ -13,7 +13,7 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
     if (!user) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
     }
-    const verifyRes = await verifyAppleAuthToken(req.body.appleAuthToken, <string>user.email, user.appleAuthUserId);
+    const verifyRes = await verifyAppleAuthToken(req.body.appleAuthToken, user.appleAuthUserId);
     if (!verifyRes) {
         throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID);
     }    

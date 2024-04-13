@@ -4,7 +4,7 @@ import CustomError from './customError';
 import logger from './logger';
 import { constants, enums, interfaces, Environments } from '../utils';
 
-const verifyAppleAuthToken = async (token: string, email: string, appleAuthUserId?: string): Promise<boolean> => {
+const verifyAppleAuthToken = async (token: string, appleAuthUserId: string): Promise<boolean> => {
     let signingKey = '';
     try {
         const [header] = token.split('.');
@@ -36,10 +36,7 @@ const verifyAppleAuthToken = async (token: string, email: string, appleAuthUserI
                 }, callback
             );
         });
-        if (payload?.email === email && payload.email_verified) {
-            if (appleAuthUserId && appleAuthUserId !== payload.sub) {
-                return false;
-            }
+        if (payload.sub === appleAuthUserId) {
             return true;
         }
     }

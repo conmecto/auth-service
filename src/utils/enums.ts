@@ -127,3 +127,33 @@ export enum PrefixesForLogs {
 
     SAVE_DEVICE_INFO_ERROR = 'Save device info error: '
 }
+
+export enum UserFieldsDbName {
+    'id' = 'id',
+    'userId' = 'user_id',
+    'user_id' = 'userId',
+    'searchFor' = 'search_for',
+    'search_for' = 'searchFor',
+    'searchIn' = 'search_in',
+    'search_in' = 'searchIn',
+    'city' = 'city',
+    'country' = 'country',
+    'name' = 'name',
+    'dob' = 'dob',
+    'email' = 'email',
+    'gender' = 'gender',
+    'createdAt' = 'created_at',
+    'created_at' = 'createdAt',
+    'updatedAt' = 'updated_at',
+    'updated_at' = 'updatedAt',
+    'deleted_at' = 'deletedAt',
+    'deletedAt' = 'deleted_at',
+    'apple_auth_user_id' = 'appleAuthUserId',
+    'verified' = 'verified',
+    'deviceToken' = 'device_token',
+    'device_token' = 'deviceToken',
+    'terms_accepted' = 'termsAccepted', 
+    'termsAccepted' = 'terms_accepted',
+    'otpResendAttempts' = 'otp_resend_attempts',
+    'otpValidationAttempts' = 'otp_validation_attempts'
+}

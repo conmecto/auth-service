@@ -21,7 +21,7 @@ const resendCodeSchema = Joi.object({
 });
 
 const createUserSchema = Joi.object({
-    email: Joi.string().email().required(),
+    email: Joi.string().email().optional(),
     //number: Joi.string().min(6).regex(/^[0-9]*$/).required(),
     name: Joi.string().min(3).max(100).required(),
     city: Joi.string().required(),
@@ -31,7 +31,7 @@ const createUserSchema = Joi.object({
     dob: Joi.date().required().less(PAST_DATE_18_YEARS_MILLIS),
     searchIn: Joi.string().required(),
     appleAuthToken: Joi.string().required(),
-    appleAuthUserId: Joi.string().optional(),
+    appleAuthUserId: Joi.string().required(),
     deviceToken: Joi.string().optional(),
     termsAccepted: Joi.boolean().required()
 });

@@ -26,7 +26,7 @@ interface ICityObject {
 
 // Create user 
 interface ICreateUserObject {
-    email: string,
+    email?: string,
     // extension: string,
     // number: string,
     name: string,
@@ -39,7 +39,7 @@ interface ICreateUserObject {
     appleAuthToken: string,
     verified?: boolean,
     deviceToken?: string,
-    appleAuthUserId?: string,
+    appleAuthUserId: string,
     termsAccepted: boolean
 }
 
@@ -121,6 +121,7 @@ interface IAuthenticationResponse extends IGenericResponse {
 //Get User
 interface IUserObj {
     id: number,
+    userId: number,
     verified: boolean,
     email?: string,
     deviceToken?: string,
@@ -155,6 +156,8 @@ interface IVerifyOtpPayload {
 }
 
 interface IGetUserByNumberRes {
+    id: number,
+    email?: string,
     userId: number,
     otpResendAttempts: number,
     otpValidationAttempts: number,
@@ -166,7 +169,8 @@ interface IGetUserByNumberRes {
     searchFor: string,
     searchIn: string,
     gender: string,
-    deviceToken?: string
+    deviceToken?: string,
+    appleAuthUserId: string
 }
 
 interface IGetUserByEmailRes {
