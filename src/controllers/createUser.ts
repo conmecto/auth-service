@@ -12,7 +12,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
     const userObject = <interfaces.ICreateUserObject>req.body;
     const verifyRes = await verifyAppleAuthToken(userObject.appleAuthToken, userObject.appleAuthUserId);
     if (!verifyRes) {
-        throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.INVALID_EMAIL, enums.ErrorCodes.INVALID_EMAIL);
+        throw new CustomError(enums.StatusCodes.BAD_REQUEST, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID);
     }
     const dob = moment(userObject.dob).set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0}).toISOString(true);
     //const phoneExtension = enums.PhoneExtension[userObject.country];
