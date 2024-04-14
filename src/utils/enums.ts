@@ -149,6 +149,7 @@ export enum UserFieldsDbName {
     'deleted_at' = 'deletedAt',
     'deletedAt' = 'deleted_at',
     'apple_auth_user_id' = 'appleAuthUserId',
+    'appleAuthUserId' = 'apple_auth_user_id',
     'verified' = 'verified',
     'deviceToken' = 'device_token',
     'device_token' = 'deviceToken',

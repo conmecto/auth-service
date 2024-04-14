@@ -30,8 +30,6 @@ const addUser = async (createUserObject: interfaces.ICreateUserObject): Promise<
         if (temp.rows.length) {
             throw new CustomError(enums.StatusCodes.CONFLICT, enums.Errors.DUPLICATE_USER, enums.ErrorCodes.DUPLICATE_USER);
         }
-        console.log('query2', query2);
-        console.log('param2', param2);
         res = await client.query(query2, param2);
         await client.query('COMMIT');
     } catch (err) {

@@ -156,7 +156,7 @@ interface IVerifyOtpPayload {
 }
 
 interface IGetUserByNumberRes {
-    id: number,
+    id?: number,
     email?: string,
     userId: number,
     otpResendAttempts: number,
@@ -170,7 +170,7 @@ interface IGetUserByNumberRes {
     searchIn: string,
     gender: string,
     deviceToken?: string,
-    appleAuthUserId: string
+    appleAuthUserId?: string
 }
 
 interface IGetUserByEmailRes {

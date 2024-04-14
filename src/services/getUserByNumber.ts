@@ -17,6 +17,7 @@ const getUserByNumber = async (extension: string, number: string): Promise<inter
     if (res?.rows?.length) { 
         const user = res?.rows[0];
         return {
+            id: user.id,
             userId: user.id,
             otpResendAttempts: user.otp_resend_attempts,
             otpValidationAttempts: user.otp_validation_attempts,

@@ -8,7 +8,7 @@ const authenticateRequest = async (req: interfaces.IRequestObject): Promise<inte
     }
     const payload = await verifyAuthToken(accessToken.replace('Bearer ', ''));
     let userCache = await cacheClient.getUser(`user:${payload.userId}`);
-    let userDb: interfaces.IUserObj | null = null; 
+    let userDb: interfaces.IGetUserByNumberRes | null = null; 
     if (!userCache) {
         userDb = await getUserByKey('id', payload.userId);
     }

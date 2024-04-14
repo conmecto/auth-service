@@ -23,7 +23,6 @@ const getUserByKey = async <T>(key: string, value: T): Promise<interfaces.IGetUs
     for(const key in res.rows[0]) {
         user[enums.UserFieldsDbName[key]] = res.rows[0][key];
     }
-    console.log('user', user);
     return user as interfaces.IGetUserByNumberRes;
 }
 
