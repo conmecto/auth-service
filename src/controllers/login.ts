@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { interfaces, validationSchema, constants, enums } from '../utils';
+import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
 import { 
     verifyOtp, CustomError, cacheClient, getUserByNumber, generateAuthToken, updateTokenIdentity, userCreatedMessage,
     getUserByEmail, getUserByKey, verifyAppleAuthToken
@@ -13,10 +13,12 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
     if (!user) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
     }
-    const verifyRes = await verifyAppleAuthToken(req.body.appleAuthToken, user.appleAuthUserId as string);
-    if (!verifyRes) {
-        throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID);
-    }    
+    if (Environments.env !== 'dev') {
+        const verifyRes = await verifyAppleAuthToken(req.body.appleAuthToken, user.appleAuthUserId as string);
+        if (!verifyRes) {
+            throw new CustomError(enums.StatusCodes.INVALID_TOKEN, enums.Errors.TOKEN_INVALID, enums.ErrorCodes.TOKEN_INVALID);
+        }    
+    }
     // if (user.otpValidationAttempts >= constants.OTP_VALIDATION_ATTEMPT_LIMIT) {
     //     throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.OTP_VALIDATION_ATTEMPTS_LIMIT, enums.ErrorCodes.OTP_VALIDATION_ATTEMPTS_LIMIT);    
     // }
