@@ -75,4 +75,23 @@ const createMatchCreatedPushNotification = async (message: any, channel: string)
     }
 }
 
-export { userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage, createMatchCreatedPushNotification }
+const userAccountRemoved = async (userId: number) => {
+    try {
+        if (!userId) {
+            return false;
+        }
+        await pubClient.publish(
+            Environments.redis.channels.userAccountRemoved, 
+            Buffer.from(JSON.stringify({ userId }))
+        );
+        return true;
+    } catch(err) {
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_ACCOUNT_REMOVED_PUBLISH_CHANNEL_ERROR + err?.toString());
+        return false;
+    }
+}
+
+export { 
+    userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage, createMatchCreatedPushNotification,
+    userAccountRemoved
+}

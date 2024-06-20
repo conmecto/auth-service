@@ -8,8 +8,9 @@ import getCities from './getCities';
 import logout from './logout';
 import findEmail from './findEmail';
 import updateDeviceInfo from './updateDeviceInfo';
+import removeAccount  from './removeAccount';
 
 export { 
   login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities, logout, findEmail,
-  updateDeviceInfo 
+  updateDeviceInfo, removeAccount 
 }
