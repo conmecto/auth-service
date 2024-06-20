@@ -1,9 +1,10 @@
 import { Request, Response, Router, NextFunction } from 'express';
-import { requestUtils, enums } from '../utils'; 
+import { requestUtils, enums, interfaces } from '../utils'; 
 import { 
     login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities,
-    logout, findEmail
+    logout, findEmail, removeAccount
 } from '../controllers';
+import { authenticateRequestMiddleware } from '../middlewares';
 
 const userRouter = Router();
 
@@ -48,15 +49,31 @@ userRouter.post('/login', async (req: Request, res: Response, next: NextFunction
     }
 });
 
-userRouter.post('/:userId/logout', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const filteredRequest = await requestUtils.filterRequest(req);
-        const controllerResponse = await logout(filteredRequest);
-        res.status(enums.StatusCodes.OK).send(controllerResponse);    
-    } catch(err) {
-        next(err);
+userRouter.post('/:userId/logout', 
+    authenticateRequestMiddleware,
+    async (req: interfaces.ICustomerRequest, res: Response, next: NextFunction) => {
+        try {
+            const filteredRequest = await requestUtils.filterRequest(req);
+            const controllerResponse = await logout(filteredRequest);
+            res.status(enums.StatusCodes.OK).send(controllerResponse);    
+        } catch(err) {
+            next(err);
+        }
     }
-});
+);
+
+userRouter.put('/:userId/account/remove', 
+    authenticateRequestMiddleware,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const filteredRequest = await requestUtils.filterRequest(req);
+            const controllerResponse = await removeAccount(filteredRequest);
+            res.status(enums.StatusCodes.OK).send(controllerResponse);
+        } catch(err) {
+            next(err);
+        }
+    }
+);
 
 userRouter.post('/otp/resend', async (req: Request, res: Response, next: NextFunction) => {
     try {

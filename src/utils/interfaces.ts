@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 // Generic
 interface IGeneric {
     [key: string]: any
@@ -5,6 +7,11 @@ interface IGeneric {
 
 interface IGenericResponse {
     message: string
+}
+
+// Node request object  
+interface ICustomerRequest extends Request {
+    user?: Record<string, any>
 }
 
 // Node reqeust object  
@@ -222,5 +229,5 @@ export {
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, ITokenPayload, ITokenSignOptions,
     IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, ISendOtpObj, 
     IVerifyOtpPayload, IGetUserByNumberRes, ISendEmailObj, IGetUserByEmailRes, ICreateUserNotificationEndPoint,
-    IUpdateUserNotificationEndPoint, ISendPushNotification, IAppleAuthTokenPayload
+    IUpdateUserNotificationEndPoint, ISendPushNotification, IAppleAuthTokenPayload, ICustomerRequest
 };
