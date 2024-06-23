@@ -8,7 +8,9 @@ import updateDeviceInfo from './updateDeviceInfo';
 //import { sendEmail } from '../config';
 
 const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginUserResponse> => {
-    await validationSchema.createUserSchema.validateAsync(req.body);
+    const searchFor = enums.Search.EVERYONE;
+    const searchIn = req.body?.city;
+    await validationSchema.createUserSchema.validateAsync({ ...req.body, searchFor, searchIn });
     const userObject = <interfaces.ICreateUserObject>req.body;
     if (Environments.env !== 'dev') {
         const verifyRes = await verifyAppleAuthToken(userObject.appleAuthToken, userObject.appleAuthUserId);
@@ -26,8 +28,8 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
         name: userObject.name.toLowerCase(), 
         city: userObject.city.toLowerCase(),
         country: userObject.country.toLowerCase(),
-        searchFor: userObject.searchFor.toLowerCase(),
-        searchIn: userObject.searchIn.toLowerCase(),
+        searchFor,
+        searchIn: searchIn.toLowerCase(),
         gender: userObject.gender.toLowerCase()
     });
     if (!addUserRes) {
