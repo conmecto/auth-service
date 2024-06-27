@@ -38,8 +38,12 @@ const sendEmail = async ({ userId, email, otp }: interfaces.ISendEmailObj) => {
         if (response.MessageId) {
             return true;
         }
-    } catch(error) {
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + errorString);
     }
     return false;
 }
@@ -73,8 +77,12 @@ const createUserNotificationEndPoint = async ({ userId, deviceToken }: interface
         const createCommand = new CreatePlatformEndpointCommand(input);
         const createRes = await snsClient.send(createCommand);
         return createRes?.EndpointArn;
-    } catch(error){
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR + error?.toString());
+    } catch(error: any){
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR + errorString);
     }
 }
 
@@ -86,8 +94,12 @@ const sendPushNotification = async ({ userId, message, deviceEndpoint }: interfa
         }
         const command = new PublishCommand(input);
         await snsClient.send(command);
-    } catch(error) {
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_PUSH_NOTIFICATION_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_PUSH_NOTIFICATION_ERROR + errorString);
     }
 }
 

@@ -13,8 +13,12 @@ const updateDeviceInfo = async (userId: number, deviceToken: string): Promise<bo
     try {
         const res = await updateUserDeviceInfo(userId, updateDoc);
         return res;
-    } catch(error) {
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.SAVE_DEVICE_INFO_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.SAVE_DEVICE_INFO_ERROR + errorString);
     }
     return false;
 }

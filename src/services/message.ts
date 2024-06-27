@@ -20,8 +20,12 @@ const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
             Buffer.from(JSON.stringify({ ...payload, id: data.userId }))
         );
         return true;
-    } catch(err) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + errorString);
         return false;
     }
 }
@@ -70,8 +74,12 @@ const createMatchCreatedPushNotification = async (message: any, channel: string)
                 });
             }
         }
-    } catch(error) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_HANDLE_PUSH_NOTIFICATION_MATCH_ERROR + error?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_HANDLE_PUSH_NOTIFICATION_MATCH_ERROR + errorString);
     }
 }
 
@@ -85,8 +93,12 @@ const userAccountRemoved = async (userId: number) => {
             Buffer.from(JSON.stringify({ userId }))
         );
         return true;
-    } catch(err) {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_ACCOUNT_REMOVED_PUBLISH_CHANNEL_ERROR + err?.toString());
+    } catch(error: any) {
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_ACCOUNT_REMOVED_PUBLISH_CHANNEL_ERROR + errorString);
         return false;
     }
 }
