@@ -18,7 +18,7 @@ const updateDeviceInfo = async (userId: number, deviceToken: string): Promise<bo
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.SAVE_DEVICE_INFO_ERROR + errorString);
+        await logger('For userId:' + userId + enums.PrefixesForLogs.SAVE_DEVICE_INFO_ERROR + errorString);
     }
     return false;
 }

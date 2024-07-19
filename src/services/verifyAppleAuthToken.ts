@@ -22,7 +22,7 @@ const verifyAppleAuthToken = async (token: string, appleAuthUserId: string): Pro
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + enums.PrefixesForLogs.APPLE_AUTH_TOKEN_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.APPLE_AUTH_TOKEN_ERROR + errorString);
     }
     if (signingKey) {
         const payload: interfaces.IAppleAuthTokenPayload = await new Promise((resolve, reject) => {

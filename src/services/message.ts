@@ -25,7 +25,7 @@ const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_PUBLISH_CHANNEL_ERROR + errorString);
         return false;
     }
 }
@@ -41,7 +41,7 @@ const handleProfileCreateErrorMessage = async (message: any, channel: string) =>
         );
         await setKey(parsedMessage?.id + constants.REDIS_PUBLISH_MESSAGE_PROFILE_CACHE_KEY, (count === null ? 0 : parseInt(count) + 1) + '');
     } else {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_PROFILE_CREATE_MAX_TRY_REACHED + channel);
+        await logger(enums.PrefixesForLogs.REDIS_PROFILE_CREATE_MAX_TRY_REACHED + channel);
     }
 }
 
@@ -56,7 +56,7 @@ const handleMatchCreateErrorMessage = async (message: any, channel: string) => {
         );
         await setKey(parsedMessage?.id + constants.REDIS_PUBLISH_MESSAGE_MATCH_CACHE_KEY, (count === null ? 0 : parseInt(count) + 1) + '');
     } else {
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_MATCH_CREATE_MAX_TRY_REACHED + channel);
+        await logger(enums.PrefixesForLogs.REDIS_MATCH_CREATE_MAX_TRY_REACHED + channel);
     }
 }
 
@@ -68,7 +68,7 @@ const createMatchCreatedPushNotification = async (message: any, channel: string)
             const user = await getUserDeviceInfo(Number(userId));
             if (user?.deviceEndpoint) {
                 await sendPushNotification({ 
-                    message: "Hi " + helpers.capitalize(user.name) + ", You have just got a Match! 😉",
+                    message: "Looks like Conmecto find a new match for you 😉",
                     userId: user.id,
                     deviceEndpoint: user.deviceEndpoint
                 });
@@ -79,7 +79,7 @@ const createMatchCreatedPushNotification = async (message: any, channel: string)
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_HANDLE_PUSH_NOTIFICATION_MATCH_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_HANDLE_PUSH_NOTIFICATION_MATCH_ERROR + errorString);
     }
 }
 
@@ -98,7 +98,7 @@ const userAccountRemoved = async (userId: number) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + enums.PrefixesForLogs.REDIS_ACCOUNT_REMOVED_PUBLISH_CHANNEL_ERROR + errorString);
+        await logger(enums.PrefixesForLogs.REDIS_ACCOUNT_REMOVED_PUBLISH_CHANNEL_ERROR + errorString);
         return false;
     }
 }

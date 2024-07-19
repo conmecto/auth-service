@@ -43,7 +43,7 @@ const sendEmail = async ({ userId, email, otp }: interfaces.ISendEmailObj) => {
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + errorString);
+        await logger('For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + errorString);
     }
     return false;
 }
@@ -82,7 +82,7 @@ const createUserNotificationEndPoint = async ({ userId, deviceToken }: interface
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR + errorString);
+        await logger('For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR + errorString);
     }
 }
 
@@ -99,7 +99,7 @@ const sendPushNotification = async ({ userId, message, deviceEndpoint }: interfa
             stack: error?.stack,
             message: error?.toString()
         });
-        await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_PUSH_NOTIFICATION_ERROR + errorString);
+        await logger('For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_PUSH_NOTIFICATION_ERROR + errorString);
     }
 }
 
@@ -113,7 +113,7 @@ const sendPushNotification = async ({ userId, message, deviceEndpoint }: interfa
 //         await snsClient.send(command);
 //         return true;
 //     } catch(error) {
-//         await logger('Auth Service: ' + 'For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error?.toString());
+//         await logger('For userId:' + userId + enums.PrefixesForLogs.AWS_SEND_OTP_ERROR + error?.toString());
 //     }
 //     return false;
 // }
