@@ -5,7 +5,7 @@ import { getKey, setKey } from './cache';
 import logger from './logger';
 import getUserDeviceInfo from './getUserDeviceInfo';
 
-const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
+const userCreatedMessage = async (data: interfaces.IUserCreatedMessageObj) => {
     try {
         if (!data || !Object.keys(data).length) {
             return false;
@@ -13,11 +13,11 @@ const userCreatedMessage = async (data: interfaces.IGetUserByNumberRes) => {
         const payload = omit(data, ['deviceToken']);
         await pubClient.publish(
             Environments.redis.channels.userCreatedProfile, 
-            Buffer.from(JSON.stringify({ ...payload, id: data.userId }))
+            Buffer.from(JSON.stringify({ ...payload, id: data.id }))
         );
         await pubClient.publish(
             Environments.redis.channels.userCreatedMatch, 
-            Buffer.from(JSON.stringify({ ...payload, id: data.userId }))
+            Buffer.from(JSON.stringify({ ...payload, id: data.id }))
         );
         return true;
     } catch(error: any) {

@@ -41,13 +41,19 @@ interface ICreateUserObject {
     city: string,
     country: string,
     searchFor: string,
-    searchIn: string,
     gender: string,
     appleAuthToken: string,
     verified?: boolean,
     deviceToken?: string,
     appleAuthUserId: string,
-    termsAccepted: boolean
+    termsAccepted: boolean,
+    locationAccess: string,
+    lat?: number,
+    long?: number
+}
+
+interface IUserCreatedMessageObj extends ICreateUserObject {
+    id: number
 }
 
 interface ICreateUserResponse extends IGenericResponse {
@@ -174,7 +180,6 @@ interface IGetUserByNumberRes {
     city: string,
     country: string,
     searchFor: string,
-    searchIn: string,
     gender: string,
     deviceToken?: string,
     appleAuthUserId?: string
@@ -191,7 +196,6 @@ interface IGetUserByEmailRes {
     city: string,
     country: string,
     searchFor: string,
-    searchIn: string,
     gender: string
 }
 
@@ -224,10 +228,17 @@ interface IAppleAuthTokenPayload {
     auth_time?: number
 }
 
+interface IGetUserByKeyResponse {
+    id: number,
+    appleAuthUserId: string,
+    deviceToken?: string
+}
+
 export { 
     IGeneric, IRequestObject, IGenericResponse, ICityObject, ICreateUserObject, IAuthenticationResponse, IAuthVerifyResponse,
     ICreateUserResponse, ILoginUserObject, ILoginUserResponse, IToken, ITokenPayload, ITokenSignOptions,
     IUserObj, ITokenVerifyResponse, ITokenIdentityObj, IAddUserResponse, ICacheUserValue, ISendOtpObj, 
     IVerifyOtpPayload, IGetUserByNumberRes, ISendEmailObj, IGetUserByEmailRes, ICreateUserNotificationEndPoint,
-    IUpdateUserNotificationEndPoint, ISendPushNotification, IAppleAuthTokenPayload, ICustomerRequest
+    IUpdateUserNotificationEndPoint, ISendPushNotification, IAppleAuthTokenPayload, ICustomerRequest,
+    IUserCreatedMessageObj, IGetUserByKeyResponse
 };

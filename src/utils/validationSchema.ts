@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { Gender, Country, Search } from './enums';
+import { Gender, Country, Search, LocationAccess } from './enums';
 import { PAST_DATE_18_YEARS_MILLIS } from './constants';
 
 const verifyOtpSchema = Joi.object({
@@ -29,11 +29,13 @@ const createUserSchema = Joi.object({
     gender: Joi.string().valid(...Object.values(Gender)).required(),
     searchFor: Joi.string().valid(...Object.values(Search)).required(),
     dob: Joi.date().required().less(PAST_DATE_18_YEARS_MILLIS),
-    searchIn: Joi.string().required(),
     appleAuthToken: Joi.string().required(),
     appleAuthUserId: Joi.string().required(),
     deviceToken: Joi.string().optional(),
-    termsAccepted: Joi.boolean().required().equal(true)
+    termsAccepted: Joi.boolean().required().equal(true),
+    locationAccess: Joi.string().valid(...Object.values(LocationAccess)).required(),
+    lat: Joi.number().min(-90).max(90).optional(),
+    long: Joi.number().min(-180).max(180).optional()
 });
 
 const getCitiesSchema = Joi.object({

@@ -1,14 +1,14 @@
 import { interfaces, constants, enums } from '../utils';
 import { CustomError, verifyAuthToken, getUserByKey, cacheClient } from '../services';
 
-const authenticateRequest = async (req: interfaces.IRequestObject): Promise<interfaces.IAuthenticationResponse> => {
+const authenticateRequest = async (req: interfaces.IRequestObject) => {
     let accessToken: string = req.headers['authorization'];
     if (!accessToken) {
         throw new CustomError(enums.StatusCodes.FORBIDDEN, enums.Errors.FORBIDDEN, enums.ErrorCodes.FORBIDDEN);
     }
     const payload = await verifyAuthToken(accessToken.replace('Bearer ', ''));
     let userCache = await cacheClient.getUser(`user:${payload.userId}`);
-    let userDb: interfaces.IGetUserByNumberRes | null = null; 
+    let userDb: any = null; 
     if (!userCache) {
         userDb = await getUserByKey('id', payload.userId);
     }

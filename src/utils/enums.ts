@@ -135,8 +135,6 @@ export enum UserFieldsDbName {
     'user_id' = 'userId',
     'searchFor' = 'search_for',
     'search_for' = 'searchFor',
-    'searchIn' = 'search_in',
-    'search_in' = 'searchIn',
     'city' = 'city',
     'country' = 'country',
     'name' = 'name',
@@ -157,5 +155,15 @@ export enum UserFieldsDbName {
     'terms_accepted' = 'termsAccepted', 
     'termsAccepted' = 'terms_accepted',
     'otpResendAttempts' = 'otp_resend_attempts',
-    'otpValidationAttempts' = 'otp_validation_attempts'
+    'otpValidationAttempts' = 'otp_validation_attempts',
+    'locationAccess' = 'location_access',
+    'location_access' = 'locationAccess',
+    'lat' = 'lat',
+    'long' = 'long'
+}
+
+export enum LocationAccess {
+    YES = 'yes',
+    NO = 'no',
+    ONCE = 'once'
 }

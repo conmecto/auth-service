@@ -1,16 +1,15 @@
 import moment from 'moment';
 import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
 import { 
-    addUser, CustomError, cacheClient, addOtp, verifyAppleAuthToken, generateAuthToken, 
+    addUser, CustomError, cacheClient, verifyAppleAuthToken, generateAuthToken, 
     updateTokenIdentity, userCreatedMessage, getUserByKey
 } from '../services';
 import updateDeviceInfo from './updateDeviceInfo';
 //import { sendEmail } from '../config';
 
-const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginUserResponse> => {
+const createUser = async (req: interfaces.IRequestObject) => {
     const searchFor = enums.Search.EVERYONE;
-    const searchIn = req.body?.city;
-    await validationSchema.createUserSchema.validateAsync({ ...req.body, searchFor, searchIn });
+    await validationSchema.createUserSchema.validateAsync({ ...req.body, searchFor });
     const userObject = <interfaces.ICreateUserObject>req.body;
     if (Environments.env !== 'dev') {
         const verifyRes = await verifyAppleAuthToken(userObject.appleAuthToken, userObject.appleAuthUserId);
@@ -20,7 +19,7 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
     }
     const dob = moment(userObject.dob).set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0}).toISOString(true);
     //const phoneExtension = enums.PhoneExtension[userObject.country];
-    const addUserRes = await addUser({ 
+    const createUserObj = { 
         ...userObject, 
         verified: true,
         dob, 
@@ -29,9 +28,9 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
         city: userObject.city.toLowerCase(),
         country: userObject.country.toLowerCase(),
         searchFor,
-        searchIn: searchIn.toLowerCase(),
         gender: userObject.gender.toLowerCase()
-    });
+    };
+    const addUserRes = await addUser(createUserObj);
     if (!addUserRes) {
         throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     }
@@ -46,17 +45,18 @@ const createUser = async (req: interfaces.IRequestObject): Promise<interfaces.IL
     if (!user) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);
     }
-    const token = await generateAuthToken({ userId: user.userId });
+    const userId = user.id;
+    const token = await generateAuthToken({ userId });
     const exp = moment().add(token.exp, 'seconds').toISOString(true);
-    await updateTokenIdentity({ userId: user.userId, expiredAt: exp, jti: token.jti });
+    await updateTokenIdentity({ userId, expiredAt: exp, jti: token.jti });
     if (req.body.deviceToken && req.body.deviceToken !== user.deviceToken) {
-        await updateDeviceInfo(user.userId, req.body.deviceToken);
+        await updateDeviceInfo(userId, req.body.deviceToken);
     }
-    await cacheClient.setKey(`user:${user.userId}`, JSON.stringify({ id: user.userId, verified: true }));
-    await userCreatedMessage(user);
+    await cacheClient.setKey(`user:${userId}`, JSON.stringify({ id: userId, verified: true }));
+    await userCreatedMessage({ ...createUserObj, id: userId });
     return {
         message: constants.USER_LOGGED_IN,
-        data: [{ userId: user.userId, access: token.access, refresh: token.refresh }]
+        data: [{ userId, access: token.access, refresh: token.refresh }]
     }
 }
 
