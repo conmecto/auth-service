@@ -32,10 +32,7 @@ const createUserSchema = Joi.object({
     appleAuthToken: Joi.string().required(),
     appleAuthUserId: Joi.string().required(),
     deviceToken: Joi.string().optional(),
-    termsAccepted: Joi.boolean().required().equal(true),
-    locationAccess: Joi.string().valid(...Object.values(LocationAccess)).required(),
-    lat: Joi.number().min(-90).max(90).optional(),
-    long: Joi.number().min(-180).max(180).optional()
+    termsAccepted: Joi.boolean().required().equal(true)
 });
 
 const getCitiesSchema = Joi.object({

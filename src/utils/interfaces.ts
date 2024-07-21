@@ -46,10 +46,7 @@ interface ICreateUserObject {
     verified?: boolean,
     deviceToken?: string,
     appleAuthUserId: string,
-    termsAccepted: boolean,
-    locationAccess: string,
-    lat?: number,
-    long?: number
+    termsAccepted: boolean
 }
 
 interface IUserCreatedMessageObj extends ICreateUserObject {

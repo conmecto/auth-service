@@ -155,11 +155,7 @@ export enum UserFieldsDbName {
     'terms_accepted' = 'termsAccepted', 
     'termsAccepted' = 'terms_accepted',
     'otpResendAttempts' = 'otp_resend_attempts',
-    'otpValidationAttempts' = 'otp_validation_attempts',
-    'locationAccess' = 'location_access',
-    'location_access' = 'locationAccess',
-    'lat' = 'lat',
-    'long' = 'long'
+    'otpValidationAttempts' = 'otp_validation_attempts'
 }
 
 export enum LocationAccess {
