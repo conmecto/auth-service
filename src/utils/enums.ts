@@ -16,14 +16,14 @@ export enum Role {
 }
 
 export enum Country {
-    INDIA = 'IN',
-    AUSTRALIA = 'AU',
-    UNITED_KINGDOM = 'GB',
-    UNITED_STATES_OF_AMERICA = 'US',
+    INDIA = 'in',
+    AUSTRALIA = 'au',
+    UNITED_KINGDOM = 'gb',
+    UNITED_STATES_OF_AMERICA = 'us',
 }
 
 export enum PhoneExtension {
-    'india' = '+91',
+    'in' = '+91',
 }
 
 export enum StatusCodes {
