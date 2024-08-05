@@ -10,14 +10,16 @@ const markAccountRemoved = async (userId: number): Promise<boolean> => {
         RETURNING users.id
     `;
     const query2 = 'UPDATE token_identity SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
-    const param1 = [userId, moment().toISOString(true)];
-    const param2 = [userId, moment().toISOString(true)];
+    const query3 = 'UPDATE user_details SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
+    const timestamp = moment().toISOString(true);
+    const params = [userId, timestamp];
     const client = await getDbClient();
     let res: QueryResult | null = null;
     try {
         await client.query('BEGIN');
-        res = await client.query(query1, param1);    
-        await client.query(query2, param2);  
+        res = await client.query(query1, params);    
+        await client.query(query2, params);  
+        await client.query(query3, params);
         await client.query('COMMIT');  
     } catch(err) {
         console.log(err);
