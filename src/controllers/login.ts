@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
 import { 
-    verifyOtp, CustomError, cacheClient, getUserByNumber, generateAuthToken, updateTokenIdentity, userCreatedMessage,
+    verifyOtp, CustomError, cacheClient, getUserByNumber, generateAuthToken, updateTokenIdentity,
     getUserByEmail, getUserByKey, verifyAppleAuthToken
 } from '../services';
 import updateDeviceInfo from './updateDeviceInfo';
@@ -33,9 +33,6 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
     //     throw new CustomError(enums.StatusCodes.INTERNAL_SERVER, enums.Errors.INTERNAL_SERVER, enums.ErrorCodes.INTERNAL_SERVER);
     // }
     const userId = Number(user.id);
-    const token = await generateAuthToken({ userId });
-    const exp = moment().add(token.exp, 'seconds').toISOString(true);
-    await updateTokenIdentity({ userId, expiredAt: exp, jti: token.jti });
     // if (!user.verified) {
     //     await cacheClient.setKey(`user:${userId}`, JSON.stringify({ id: user.userId, verified: true }));
     //     await userCreatedMessage(user);
@@ -43,6 +40,9 @@ const login = async (req: interfaces.IRequestObject): Promise<interfaces.ILoginU
     if (req.body.deviceToken && req.body.deviceToken !== user.deviceToken) {
         await updateDeviceInfo(userId, req.body.deviceToken);
     }
+    const token = await generateAuthToken({ userId });
+    const exp = moment().add(token.exp, 'seconds').toISOString(true);
+    await updateTokenIdentity({ userId, expiredAt: exp, jti: token.jti });
     return {
         message: constants.USER_LOGGED_IN,
         data: [{ userId, access: token.access, refresh: token.refresh }]

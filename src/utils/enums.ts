@@ -100,12 +100,7 @@ export enum PrefixesForLogs {
     REDIS_CONNECTION_ERROR_CLIENT2 = 'Redis client 2 connection error: ',
     REDIS_CONNECTION_READY_CLIENT1 = 'Redis client 1 is ready: ',
     REDIS_CONNECTION_READY_CLIENT2 = 'Redis client 2 is ready: ',
-    REDIS_PUBLISH_CHANNEL_ERROR = 'Redis publish channel error: ',
     REDIS_SUBSCRIBE_CHANNEL_ERROR = 'Redis subscribe channel error: ',
-    REDIS_PROFILE_CREATE_ERROR = 'Redis profile create error: ',
-    REDIS_PROFILE_CREATE_MAX_TRY_REACHED = 'Redis profile create max try reached: ',
-    REDIS_MATCH_CREATE_MAX_TRY_REACHED = 'Redis match create max try reached: ',
-    REDIS_MATCH_CREATE_ERROR = 'Redis match user create error: ',
     REDIS_LOGGING_CHANNEL_ERROR = 'Redis logging channel error: ',
     REDIS_HANDLE_PUSH_NOTIFICATION_MATCH_ERROR = 'Redis handle push notification match error: ',
     REDIS_ACCOUNT_REMOVED_PUBLISH_CHANNEL_ERROR = 'Redis account removed publish channel error',
@@ -129,7 +124,9 @@ export enum PrefixesForLogs {
 
     APPLE_AUTH_TOKEN_ERROR = 'Apple auth token error: ',
 
-    SAVE_DEVICE_INFO_ERROR = 'Save device info error: '
+    SAVE_DEVICE_INFO_ERROR = 'Save device info error: ',
+
+    ADD_USER_CREATED_JOB = 'Add User Created Job error: '
 }
 
 export enum UserFieldsDbName {

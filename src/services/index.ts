@@ -9,7 +9,8 @@ import verifyTokenIdentity from './verifyTokenIdentity';
 import updateTokenIdentity from './updateTokenIdentity';
 import * as cacheClient from './cache';
 import { 
-    userCreatedMessage, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage, createMatchCreatedPushNotification,
+    addUserCreatedJob,
+    createMatchCreatedPushNotification,
     userAccountRemoved 
 } from './message';
 import getUserByNumber from './getUserByNumber';
@@ -23,9 +24,8 @@ import markAccountRemoved from './markAccountRemoved';
 
 export { 
     CustomError, getUserByKey, addUser, verifyOtp, generateAuthToken, updateTokenIdentity,
-    addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, userCreatedMessage,
-    getUserByNumber, handleMatchCreateErrorMessage, handleProfileCreateErrorMessage,
-    getCitiesByCountry, userLogout, logger, getUserByEmail, updateUserDeviceInfo, 
+    addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, addUserCreatedJob,
+    getUserByNumber, getCitiesByCountry, userLogout, logger, getUserByEmail, updateUserDeviceInfo, 
     createMatchCreatedPushNotification, verifyAppleAuthToken, markAccountRemoved,
     userAccountRemoved
 }

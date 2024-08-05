@@ -2,7 +2,7 @@ import moment from 'moment';
 import { interfaces, validationSchema, constants, enums, Environments } from '../utils';
 import { 
     addUser, CustomError, cacheClient, verifyAppleAuthToken, generateAuthToken, 
-    updateTokenIdentity, userCreatedMessage, getUserByKey
+    updateTokenIdentity, addUserCreatedJob, getUserByKey
 } from '../services';
 import updateDeviceInfo from './updateDeviceInfo';
 //import { sendEmail } from '../config';
@@ -46,14 +46,14 @@ const createUser = async (req: interfaces.IRequestObject) => {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);
     }
     const userId = user.id;
-    const token = await generateAuthToken({ userId });
-    const exp = moment().add(token.exp, 'seconds').toISOString(true);
-    await updateTokenIdentity({ userId, expiredAt: exp, jti: token.jti });
     if (req.body.deviceToken && req.body.deviceToken !== user.deviceToken) {
         await updateDeviceInfo(userId, req.body.deviceToken);
     }
     await cacheClient.setKey(`user:${userId}`, JSON.stringify({ id: userId, verified: true }));
-    await userCreatedMessage({ ...createUserObj, id: userId });
+    await addUserCreatedJob({ ...createUserObj, id: userId });
+    const token = await generateAuthToken({ userId });
+    const exp = moment().add(token.exp, 'seconds').toISOString(true);
+    await updateTokenIdentity({ userId, expiredAt: exp, jti: token.jti });
     return {
         message: constants.USER_LOGGED_IN,
         data: [{ userId, access: token.access, refresh: token.refresh }]
