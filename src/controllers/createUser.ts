@@ -28,7 +28,7 @@ const createUser = async (req: interfaces.IRequestObject) => {
         city: userObject.city.toLowerCase(),
         country: userObject.country.toLowerCase(),
         searchFor,
-        gender: userObject.gender.toLowerCase()
+        gender: userObject.gender.toLowerCase() || enums.Gender.NOT_SPECIFIED
     };
     const addUserRes = await addUser(createUserObj);
     if (!addUserRes) {
