@@ -27,9 +27,6 @@ const redisClient2 = createClient({
 (async function connect() {
     await redisClient1.connect(); 
     console.log(enums.PrefixesForLogs.REDIS_CONNECTION_READY_CLIENT1 + redisClient1.isReady);
-    if (redisClient1.isReady) {
-//        await redisClient1.set(country, cities);
-    }
 })();
 
 (async function connect() {
