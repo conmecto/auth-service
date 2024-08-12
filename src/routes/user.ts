@@ -10,10 +10,10 @@ const userRouter = Router();
 
 userRouter.get('/check', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const filteredRequest = await requestUtils.filterRequest(req);
-        //const controllerResponse = await findNumber(filteredRequest);
-        const controllerResponse = await findEmail(filteredRequest);
-        res.status(enums.StatusCodes.OK).send(controllerResponse);
+        // const filteredRequest = await requestUtils.filterRequest(req);
+        // const controllerResponse = await findNumber(filteredRequest);
+        // const controllerResponse = await findEmail(filteredRequest);
+        res.status(enums.StatusCodes.OK).send('Okay');
     } catch(err) {
         next(err);
     }
