@@ -2,12 +2,12 @@ import { QueryResult } from 'pg';
 import moment from 'moment';
 import { getDbClient } from '../config';
 
-const markAccountRemoved = async (userId: number): Promise<boolean> => {
+const markAccountRemoved = async (userId: number) => {
     const query1 = `
         UPDATE users 
         SET apple_auth_user_id=NULL, deleted_at=$2 
         WHERE id=$1 AND deleted_at IS NULL
-        RETURNING users.id
+        RETURNING users.id, user.device_endpoint
     `;
     const query2 = 'UPDATE token_identity SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
     const query3 = 'UPDATE user_details SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
@@ -28,7 +28,12 @@ const markAccountRemoved = async (userId: number): Promise<boolean> => {
     } finally {
         client.release();
     }
-    return Boolean(res?.rows?.length);
+    if (res?.rows?.length) {
+        return {
+            userId: res.rows[0].id,
+            deviceEndpoint: res.rows[0].device_endpoint
+        }
+    }
 }
 
 export default markAccountRemoved;

@@ -1,5 +1,6 @@
 import { interfaces, validationSchema, enums } from '../utils';
 import { CustomError, markAccountRemoved, userAccountRemoved } from '../services';
+import { removeDeviceEndPoint } from '../config';
 
 const removeAccount = async (req: interfaces.IRequestObject): Promise<interfaces.IGenericResponse> => {
     await validationSchema.logoutSchema.validateAsync(req.params);
@@ -16,6 +17,9 @@ const removeAccount = async (req: interfaces.IRequestObject): Promise<interfaces
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
     }
     await userAccountRemoved(userId);
+    if (res.deviceEndpoint) {
+        await removeDeviceEndPoint(userId, res.deviceEndpoint);
+    }
     return {
         message: 'Account removed successfully'
     };
