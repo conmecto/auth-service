@@ -7,7 +7,7 @@ const markAccountRemoved = async (userId: number) => {
         UPDATE users 
         SET apple_auth_user_id=NULL, deleted_at=$2 
         WHERE id=$1 AND deleted_at IS NULL
-        RETURNING users.id, user.device_endpoint
+        RETURNING users.id, users.device_endpoint
     `;
     const query2 = 'UPDATE token_identity SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
     const query3 = 'UPDATE user_details SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
