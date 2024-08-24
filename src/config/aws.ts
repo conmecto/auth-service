@@ -1,4 +1,4 @@
-import { SNSClient, CreatePlatformEndpointCommand, PublishCommand, ListPlatformApplicationsCommand } from '@aws-sdk/client-sns';
+import { SNSClient, CreatePlatformEndpointCommand, PublishCommand, ListPlatformApplicationsCommand, DeleteEndpointCommand } from '@aws-sdk/client-sns';
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import { Environments, interfaces, enums, constants } from '../utils';
 import { logger } from '../services';
@@ -86,6 +86,22 @@ const createUserNotificationEndPoint = async ({ userId, deviceToken }: interface
     }
 }
 
+const removeDeviceEndPoint = async (userId: number, deviceEndpoint: string) => {
+    try {
+        const input = {
+            EndpointArn: deviceEndpoint
+        }
+        const deleteEndpointCommand = new DeleteEndpointCommand(input);
+        await snsClient.send(deleteEndpointCommand);
+    } catch(error: any){
+        const errorString = JSON.stringify({
+            stack: error?.stack,
+            message: error?.toString()
+        });
+        await logger('For userId:' + userId + enums.PrefixesForLogs.AWS_SNS_CREATE_PLATFORM_ENDPOINT_ERROR + errorString);
+    }
+}
+
 const sendPushNotification = async ({ userId, message, deviceEndpoint }: interfaces.ISendPushNotification) => {
     try {
         const input = {
@@ -118,4 +134,4 @@ const sendPushNotification = async ({ userId, message, deviceEndpoint }: interfa
 //     return false;
 // }
 
-export { runAwsFile, sendEmail, createUserNotificationEndPoint, sendPushNotification }
+export { runAwsFile, sendEmail, createUserNotificationEndPoint, sendPushNotification, removeDeviceEndPoint }

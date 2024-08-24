@@ -1,5 +1,5 @@
 import getDbClient from './database';
-import { runAwsFile, sendEmail, createUserNotificationEndPoint, sendPushNotification } from './aws';
+import { runAwsFile, sendEmail, createUserNotificationEndPoint, sendPushNotification, removeDeviceEndPoint } from './aws';
 import { redisClient1, redisClient2 } from './redis';
 import { createUserSettingQueue, createUserProfileQueue } from './jobQueue';
 
@@ -12,5 +12,6 @@ export {
     createUserNotificationEndPoint, 
     sendPushNotification, 
     createUserSettingQueue, 
-    createUserProfileQueue  
+    createUserProfileQueue,
+    removeDeviceEndPoint
 }
