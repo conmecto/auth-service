@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import { requestUtils, enums, interfaces } from '../utils'; 
 import { 
     login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities,
-    logout, findEmail, removeAccount
+    logout, findEmail, removeAccount, checkUser
 } from '../controllers';
 import { authenticateRequestMiddleware } from '../middlewares';
 
@@ -23,6 +23,16 @@ userRouter.get('/cities', async (req: Request, res: Response, next: NextFunction
     try {
         const filteredRequest = await requestUtils.filterRequest(req);
         const controllerResponse = await getCities(filteredRequest);
+        res.status(enums.StatusCodes.OK).send(controllerResponse);
+    } catch(err) {
+        next(err);
+    }
+});
+
+userRouter.get('/check-account', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const filteredRequest = await requestUtils.filterRequest(req);
+        const controllerResponse = await checkUser(filteredRequest);
         res.status(enums.StatusCodes.OK).send(controllerResponse);
     } catch(err) {
         next(err);
