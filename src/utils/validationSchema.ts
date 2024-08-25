@@ -20,6 +20,10 @@ const resendCodeSchema = Joi.object({
     email: Joi.string().email().required()
 });
 
+const checkUserSchema = Joi.object({
+    appleAuthUserId: Joi.string().required()
+});
+
 const createUserSchema = Joi.object({
     email: Joi.string().email().optional(),
     //number: Joi.string().min(6).regex(/^[0-9]*$/).required(),
@@ -43,4 +47,4 @@ const logoutSchema = Joi.object({
     userId: Joi.number().required(),
 });
 
-export { verifyOtpSchema, createUserSchema, resendCodeSchema, getCitiesSchema, logoutSchema };
+export { verifyOtpSchema, createUserSchema, resendCodeSchema, getCitiesSchema, logoutSchema, checkUserSchema };

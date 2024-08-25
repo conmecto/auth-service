@@ -9,8 +9,9 @@ import logout from './logout';
 import findEmail from './findEmail';
 import updateDeviceInfo from './updateDeviceInfo';
 import removeAccount  from './removeAccount';
+import checkUser from './checkUser';
 
 export { 
   login, createUser, resendOtp, authenticateRequest, authenticateSilentRequest, findNumber, getCities, logout, findEmail,
-  updateDeviceInfo, removeAccount 
+  updateDeviceInfo, removeAccount, checkUser
 }

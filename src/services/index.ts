@@ -21,11 +21,12 @@ import getUserByEmail from './getUserByEmail';
 import updateUserDeviceInfo from './updateUserDeviceInfo';
 import verifyAppleAuthToken from './verifyAppleAuthToken';
 import markAccountRemoved from './markAccountRemoved';
+import checkUserExists from './checkUserExists';
 
 export { 
     CustomError, getUserByKey, addUser, verifyOtp, generateAuthToken, updateTokenIdentity,
     addOtp, verifyAuthToken, verifyTokenIdentity, cacheClient, addUserCreatedJob,
     getUserByNumber, getCitiesByCountry, userLogout, logger, getUserByEmail, updateUserDeviceInfo, 
     createMatchCreatedPushNotification, verifyAppleAuthToken, markAccountRemoved,
-    userAccountRemoved
+    userAccountRemoved, checkUserExists
 }
