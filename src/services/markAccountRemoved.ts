@@ -5,7 +5,7 @@ import { getDbClient } from '../config';
 const markAccountRemoved = async (userId: number) => {
     const query1 = `
         UPDATE users 
-        SET apple_auth_user_id=NULL, deleted_at=$2 
+        SET deleted_at=$2 
         WHERE id=$1 AND deleted_at IS NULL
         RETURNING users.id, users.device_endpoint
     `;
