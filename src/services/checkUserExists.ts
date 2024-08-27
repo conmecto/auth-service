@@ -1,15 +1,17 @@
 import { QueryResult } from 'pg';
 import { getDbClient } from '../config';
 
-const checkUserExists = async (appleAuthUserId: number): Promise<boolean> => {
+const checkUserExists = async (appleAuthUserId: number) => {
     const query = `
-        SELECT id 
-        FROM users 
+        SELECT u.id, ud.name, u.deleted_at 
+        FROM users u
+        LEFT JOIN user_details ud ON ud.user_id=u.id
         WHERE 
-        apple_auth_user_id=$1 AND 
-        verified=TRUE AND 
-        terms_accepted=TRUE AND 
-        deleted_at IS NULL
+        u.apple_auth_user_id=$1 AND 
+        u.verified=TRUE AND 
+        u.terms_accepted=TRUE
+        ORDER BY u.created_at DESC
+        LIMIT 1
     `;
     const param = [appleAuthUserId];
     const client = await getDbClient();
@@ -21,7 +23,15 @@ const checkUserExists = async (appleAuthUserId: number): Promise<boolean> => {
     } finally {
         client.release();
     }
-    return Boolean(res?.rows?.length);
+    if (res?.rows?.length) {
+        const user = res.rows[0];
+        return {
+            id: user.id,
+            name: user.name,
+            deletedAt: user.deleted_at
+        }
+    }
+    return null;
 }
 
 export default checkUserExists;

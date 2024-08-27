@@ -7,9 +7,7 @@ const checkUser = async (req: interfaces.IRequestObject) => {
     if (!user) {
         throw new CustomError(enums.StatusCodes.NOT_FOUND, enums.Errors.USER_NOT_FOUND, enums.ErrorCodes.USER_NOT_FOUND);    
     }
-    return {
-        message: 'User already exists'
-    };
+    return user;
 }
 
 export default checkUser;
