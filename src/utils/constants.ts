@@ -30,7 +30,7 @@ const REDIS_PUBLISH_MESSAGE_MATCH_CACHE_KEY = 'create-match-publish-message-coun
 const PAST_DATE_18_YEARS_MILLIS = moment().subtract('18', 'years').unix() * 1000;
 
 const appleAuthKeyUrl = 'https://appleid.apple.com/auth/keys';
-const appleAuthKeyTimeoutMilli = 30000;
+const appleAuthKeyTimeoutMilli = 300000;
 const appleIssuerUrl = 'https://appleid.apple.com';
 
 const CREATE_USER_JOB_QUEUE = {
