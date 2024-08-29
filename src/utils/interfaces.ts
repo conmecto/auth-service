@@ -37,11 +37,7 @@ interface ICreateUserObject {
     // extension: string,
     // number: string,
     name: string,
-    dob: string,
-    city: string,
     country: string,
-    searchFor: string,
-    gender: string,
     appleAuthToken: string,
     verified?: boolean,
     deviceToken?: string,
@@ -49,8 +45,10 @@ interface ICreateUserObject {
     termsAccepted: boolean
 }
 
-interface IUserCreatedMessageObj extends ICreateUserObject {
-    id: number
+interface IUserCreatedMessageObj {
+    id: number,
+    name: string,
+    country: string
 }
 
 interface ICreateUserResponse extends IGenericResponse {

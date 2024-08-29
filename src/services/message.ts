@@ -6,24 +6,24 @@ import getUserDeviceInfo from './getUserDeviceInfo';
 
 const addUserCreatedJob = async (data: interfaces.IUserCreatedMessageObj) => {
     try {
-        if (!data || !Object.keys(data).length) {
-            return false;
-        }
-        const payload = omit(data, ['email', 'deviceToken', 'appleAuthUserId', 'appleAuthToken', 'termsAccepted', 'verified']);
         const [profileJob, settingJob] = await Promise.all([
-            createUserProfileQueue.add('createUserProfile', payload),
-            createUserSettingQueue.add('createUserSetting', payload)
+            createUserProfileQueue.add('createUserProfile', data),
+            createUserSettingQueue.add('createUserSetting', data)
         ]);
-        if (profileJob.id && settingJob.id) {
-            return true;
+        let res: { profileJobId?: string, settingJobId?: string } = {};
+        if (profileJob?.id) {
+            res.profileJobId = profileJob.id;
         }
+        if (settingJob?.id) {
+            res.settingJobId = settingJob.id;
+        }
+        return res;
     } catch(error: any) {
         const errorString = JSON.stringify({
             stack: error?.stack,
             message: error?.toString()
         });
         await logger(enums.PrefixesForLogs.ADD_USER_CREATED_JOB + errorString);
-        return false;
     }
 }
 

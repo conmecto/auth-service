@@ -8,22 +8,14 @@ const addUser = async (createUserObject: interfaces.ICreateUserObject) => {
     const param1 = [createUserObject.appleAuthUserId];    
     const query2 = `
         INSERT INTO 
-        users (country, verified, apple_auth_user_id, terms_accepted)
-        VALUES ($1, $2, $3, $4)
+        users (country, verified, apple_auth_user_id, terms_accepted, name)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING users.id
     `;
     const param2 = [
         createUserObject.country, createUserObject.verified, 
-        createUserObject.appleAuthUserId, createUserObject.termsAccepted
-    ];
-    const query3 = `
-        INSERT INTO 
-        user_details (name, dob, gender, city, user_id)
-        VALUES ($1, $2, $3, $4, $5)
-    `;
-    const param3 = [
-        createUserObject.name, createUserObject.dob, 
-        createUserObject.gender, createUserObject.city
+        createUserObject.appleAuthUserId, createUserObject.termsAccepted,
+        (createUserObject.name || '')
     ];
     let res: QueryResult | null = null;
     const client = await getDbClient();
@@ -37,8 +29,6 @@ const addUser = async (createUserObject: interfaces.ICreateUserObject) => {
         if (!res.rows.length) {
             throw new Error('Signup Failed');
         }
-        param3.push( res.rows[0].id);
-        await client.query(query3, param3);
         await client.query('COMMIT');
     } catch (err) {
         await client.query('ROLLBACK')
@@ -48,7 +38,7 @@ const addUser = async (createUserObject: interfaces.ICreateUserObject) => {
     }
     if (res?.rows?.length) {
         return {
-            userId: res.rows[0].id
+            userId: res.rows[0].id as number
         };
     }
     return null;
