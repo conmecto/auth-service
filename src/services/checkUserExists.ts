@@ -3,9 +3,8 @@ import { getDbClient } from '../config';
 
 const checkUserExists = async (appleAuthUserId: number) => {
     const query = `
-        SELECT u.id, ud.name, u.deleted_at 
+        SELECT u.id, u.name, u.deleted_at 
         FROM users u
-        LEFT JOIN user_details ud ON ud.user_id=u.id
         WHERE 
         u.apple_auth_user_id=$1 AND 
         u.verified=TRUE AND 

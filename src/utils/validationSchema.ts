@@ -27,12 +27,8 @@ const checkUserSchema = Joi.object({
 const createUserSchema = Joi.object({
     email: Joi.string().email().optional(),
     //number: Joi.string().min(6).regex(/^[0-9]*$/).required(),
-    name: Joi.string().min(3).max(100).required(),
-    city: Joi.string().required(),
+    name: Joi.string().min(3).max(100).optional(),
     country: Joi.string().valid(...Object.values(Country)).required(),
-    gender: Joi.string().valid(...Object.values(Gender)).required(),
-    searchFor: Joi.string().valid(...Object.values(Search)).required(),
-    dob: Joi.date().required().less(PAST_DATE_18_YEARS_MILLIS),
     appleAuthToken: Joi.string().required(),
     appleAuthUserId: Joi.string().required(),
     deviceToken: Joi.string().optional(),

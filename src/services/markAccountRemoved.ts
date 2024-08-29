@@ -10,7 +10,6 @@ const markAccountRemoved = async (userId: number) => {
         RETURNING users.id, users.device_endpoint
     `;
     const query2 = 'UPDATE token_identity SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
-    const query3 = 'UPDATE user_details SET deleted_at=$2 WHERE user_id=$1 AND deleted_at IS NULL';
     const timestamp = moment().toISOString(true);
     const params = [userId, timestamp];
     const client = await getDbClient();
@@ -18,8 +17,7 @@ const markAccountRemoved = async (userId: number) => {
     try {
         await client.query('BEGIN');
         res = await client.query(query1, params);    
-        await client.query(query2, params);  
-        await client.query(query3, params);
+        await client.query(query2, params);
         await client.query('COMMIT');  
     } catch(err) {
         console.log(err);
