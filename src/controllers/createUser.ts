@@ -39,7 +39,7 @@ const createUser = async (req: interfaces.IRequestObject) => {
     if (req.body.deviceToken) {
         await updateDeviceInfo(userId, req.body.deviceToken);
     }
-    const jobRes = await addUserCreatedJob({ id: userId, name: (createUserObj.name || ''), country: createUserObj.country });
+    const jobRes = await addUserCreatedJob({ id: userId, name: addUserRes.name, country: createUserObj.country });
     await cacheClient.setKey(
         `user:${userId}`, 
         JSON.stringify({ 
