@@ -1,6 +1,5 @@
 import Joi from 'joi';
-import { Gender, Country, Search, LocationAccess } from './enums';
-import { PAST_DATE_18_YEARS_MILLIS } from './constants';
+import { Country } from './enums';
 
 const verifyOtpSchema = Joi.object({
     // extension: Joi.string().min(2).required(),

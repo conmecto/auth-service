@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 const USER_LOGGED_IN = 'User logged in successfully';
 const USER_CREATED = 'User created successfully';
 
@@ -11,7 +9,7 @@ const OTP_EXPIRED_TIME_MIN = 1;
 const TWELVE_HOURS_IN_MILLS = 43200000;
 const ONE_HOUR_IN_MILLS = 3600000;
 
-const ACCESS_TOKEN_TIME_SECONDS = 600; 
+const ACCESS_TOKEN_TIME_SECONDS = 86400; 
 const REFRESH_TOKEN_TIME_SECONDS = 2592000; 
 const TOKEN_ISSUER = 'Conmecto';
 const TOKEN_ALGORITHM = 'RS256';    
@@ -27,8 +25,6 @@ const REDIS_PUBLISH_MESSAGE_MAX_RETRY = 5;
 const REDIS_PUBLISH_MESSAGE_PROFILE_CACHE_KEY = 'create-profile-publish-message-count';
 const REDIS_PUBLISH_MESSAGE_MATCH_CACHE_KEY = 'create-match-publish-message-count';
 
-const PAST_DATE_18_YEARS_MILLIS = moment().subtract('18', 'years').unix() * 1000;
-
 const appleAuthKeyUrl = 'https://appleid.apple.com/auth/keys';
 const appleAuthKeyTimeoutMilli = 300000;
 const appleIssuerUrl = 'https://appleid.apple.com';
@@ -42,7 +38,7 @@ const CREATE_USER_JOB_QUEUE = {
 }
 
 export { 
-    USER_LOGGED_IN, PAST_DATE_18_YEARS_MILLIS, USER_CREATED, TOKEN_VALIDATED, OTP_RESEND_LIMIT,
+    USER_LOGGED_IN, USER_CREATED, TOKEN_VALIDATED, OTP_RESEND_LIMIT,
     ACCESS_TOKEN_TIME_SECONDS, REFRESH_TOKEN_TIME_SECONDS, TOKEN_ISSUER, TOKEN_ALGORITHM, 
     TOKEN_JWT_ID_LENGTH, TOKEN_ROTATED, DB_CONNECTION_TIMEOUT_MILLIS, DB_MAX_CLIENTS, DB_IDLE_TIMEOUT_MILLIS, 
     TWELVE_HOURS_IN_MILLS, ONE_HOUR_IN_MILLS, REDIS_PUBLISH_MESSAGE_PROFILE_CACHE_KEY, 
