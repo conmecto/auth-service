@@ -11,7 +11,7 @@ const addUser = async (createUserObject: interfaces.ICreateUserObject) => {
         apple_auth_user_id=$1 AND 
         verified=TRUE AND 
         terms_accepted=TRUE
-        ORDER BY created_at DESC
+        ORDER BY id DESC
         LIMIT 1
     `;
     const param1 = [createUserObject.appleAuthUserId];    
