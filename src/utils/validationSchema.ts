@@ -27,7 +27,7 @@ const createUserSchema = Joi.object({
     email: Joi.string().email().optional(),
     //number: Joi.string().min(6).regex(/^[0-9]*$/).required(),
     name: Joi.string().min(0).max(100).optional(),
-    country: Joi.string().valid(...Object.values(Country)).required(),
+    country: Joi.string().optional(),
     appleAuthToken: Joi.string().required(),
     appleAuthUserId: Joi.string().required(),
     deviceToken: Joi.string().optional(),
