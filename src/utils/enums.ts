@@ -18,9 +18,13 @@ export enum Role {
 
 export enum Country {
     INDIA = 'in',
-    // AUSTRALIA = 'au',
-    // UNITED_KINGDOM = 'gb',
+    AUSTRALIA = 'au',
+    UNITED_KINGDOM = 'gb',
     UNITED_STATES_OF_AMERICA = 'us',
+    IRELAND = 'ie',
+    CANADA = 'ca',
+    JAPAN = 'jp',
+    SINGAPORE = 'sg'
 }
 
 export enum PhoneExtension {
