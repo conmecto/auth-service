@@ -24,7 +24,13 @@ export enum Country {
     IRELAND = 'ie',
     CANADA = 'ca',
     JAPAN = 'jp',
-    SINGAPORE = 'sg'
+    SINGAPORE = 'sg',
+    INDONESIA = 'id',
+    THAILAND = 'th',
+    SOUTH_KOREA = 'kr',
+    UNITED_ARAB_EMIRATES = 'ae',
+    Vietnam = 'vn',
+    PHILIPPINES = 'ph'
 }
 
 export enum PhoneExtension {
